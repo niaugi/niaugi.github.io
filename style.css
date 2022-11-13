@@ -1,0 +1,61 @@
+body {
+    margin: 0;
+    /* box-sizing: border-box; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+main {
+    /* background-color: bisque; */
+}
+
+.ai-checkbox {
+    margin: 2rem 0;
+}
+
+#checkbox {
+    margin: 1rem;
+}
+
+.area {
+    display: flex;
+    flex-wrap: wrap;
+    width: 300px;
+    outline: 5px solid white;
+    outline-offset: -1px;
+}
+
+.area>div {
+    width: 98px;
+    aspect-ratio: 1;
+    border: 1px solid black;
+
+    display: grid;
+    place-content: center;
+    font-size: 3rem;
+    color: black;
+}
+
+.area>div:hover {
+    /* background-color: goldenrod; */
+    outline: 2px solid red;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.results {
+    margin: 2rem 0;
+    font-size: 2rem;
+    text-align: center;
+}
+
+button {
+    display: block;
+    margin-inline: auto;
+    padding: .5rem 1rem;
+}
+
+.nice {
+    transition: 1s all;
+}
