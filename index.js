@@ -39,6 +39,7 @@ function restart() {
     document.querySelector('.results').innerText = ''
     let area = document.querySelectorAll('.target')
     area.forEach(el => el.innerText = '')
+    // area.forEach((el, index) => el.innerText = index)
     area.forEach(el => el.addEventListener('click', flip))
     arr = []
     comparsion = []

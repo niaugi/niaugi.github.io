@@ -4,6 +4,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: antiquewhite;
 }
 
 header {
@@ -16,8 +17,8 @@ header {
     display: flex;
     flex-wrap: wrap;
     width: 300px;
-    outline: 5px solid white;
-    outline-offset: -1px;
+    outline: 2px solid antiquewhite;
+    outline-offset: -2px;
 }
 
 .area>div {
