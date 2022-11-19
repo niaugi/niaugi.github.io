@@ -1,6 +1,9 @@
 let XOtrue = true
 let tmpSymbol = String
 let againstAi = false
+let arr = []
+let comparsion = []
+let resetListener = document.querySelector('#reset').addEventListener('click', start)
 
 let winArray = [
     [0, 1, 2],
@@ -13,8 +16,7 @@ let winArray = [
     [6, 4, 2]
 ]
 
-let arr = []
-let comparsion = []
+start()
 
 function checkbox() {
     let check = document.getElementById('checkbox')
@@ -25,20 +27,19 @@ function checkbox() {
         console.log('checkbox OFF')
         againstAi = false
     }
-    restart()
+    // start()
 }
 
-restart()
-
-let resetListener = document.querySelector('#reset').addEventListener('click', restart)
 
 
-function restart() {
-    console.log('restarting...')
+
+function start() {
+    console.log('starting...')
     tmpSymbol = 'X'
     document.querySelector('.results').innerText = ''
     let area = document.querySelectorAll('.target')
     area.forEach(el => el.innerText = '')
+    checkbox()
     // area.forEach((el, index) => el.innerText = index)
     area.forEach(el => el.addEventListener('click', flip))
     arr = []
@@ -97,7 +98,15 @@ function AIFlip() {
     })
 
     if (emptyCells.length != 0) {
-        if (emptyCells.some(el => el == 4)) {
+
+        //! AI LOGIC starts here
+
+        if (emptyCells.some(el => el == 0)) {
+            target = '#a0'
+        }
+
+
+        else if (emptyCells.some(el => el == 4)) {
             target = '#a4'
         }
 
