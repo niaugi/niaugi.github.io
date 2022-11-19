@@ -1,6 +1,7 @@
 let XOtrue = true
 let tmpSymbol = String
 let againstAi = false
+let firstMove = true
 let arr = []
 let comparsion = []
 let resetListener = document.querySelector('#reset').addEventListener('click', start)
@@ -15,6 +16,8 @@ let winArray = [
     [0, 4, 8],
     [6, 4, 2]
 ]
+
+let kampai = [0, 2, 6, 8]
 
 start()
 
@@ -34,6 +37,7 @@ function checkbox() {
 
 
 function start() {
+    firstMove = true
     console.log('starting...')
     tmpSymbol = 'X'
     document.querySelector('.results').innerText = ''
@@ -82,8 +86,8 @@ function flip(el) {
 }
 
 function AIFlip() {
-    console.log('againstAi: ' + againstAi)
-    console.log('AI Move')
+    // console.log('againstAi: ' + againstAi)
+    // console.log('AI Move')
 
     let target = ''
     tmpSymbol = 'O'
@@ -91,8 +95,8 @@ function AIFlip() {
     let emptyCells = []
 
 
-    arr.forEach((el, index) => {
-        if (el == '') {
+    arr.forEach((arrayEl, index) => {
+        if (arrayEl == '') {
             emptyCells.push(index)
         }
     })
@@ -101,12 +105,25 @@ function AIFlip() {
 
         //! AI LOGIC starts here
 
-        if (emptyCells.some(el => el == 0)) {
-            target = '#a0'
+        if (firstMove) {
+            let firstMoveTargets = []
+            emptyCells.forEach(el => {
+                if (kampai.includes(el)) {
+                    firstMoveTargets.push(el)
+                }
+            })
+
+            target = firstMoveTargets[Math.floor(Math.random() * firstMoveTargets.length)]
+
+            console.log('firstMoveTargets: ' + firstMoveTargets)
+            firstMove = false
+
+            target = '#a' + target
         }
 
 
-        else if (emptyCells.some(el => el == 4)) {
+
+        else if (emptyCells.includes(4)) {
             target = '#a4'
         }
 
@@ -124,10 +141,12 @@ function AIFlip() {
             let rndEmptyIndex = Math.floor(Math.random() * emptyCells.length)
             target = '#a' + emptyCells[rndEmptyIndex]
         }
+
         document.querySelector(target).innerText = 'O'
         document.querySelector(target).removeEventListener('click', flip)
         console.log('AI target : ' + target)
         console.log('emptyCells ' + emptyCells)
+
         makeArray()
         winCheck()
     }
