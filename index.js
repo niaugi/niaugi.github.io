@@ -1,7 +1,11 @@
-let XOtrue = true
-let tmpSymbol = String
-let againstAi = false
-let firstMove = true
+let gameOver = false
+let currentPlayer = String
+let oponentPlayer = String
+let againstAi = true
+let firstMove = true  //! REMOVE when done WHO STARTS THE GAME
+let aiFirst = true
+let Player_O = 'O'
+let Player_X = 'X'
 let arr = []
 let comparsion = []
 let resetListener = document.querySelector('#reset').addEventListener('click', start)
@@ -22,60 +26,71 @@ let kampai = [0, 2, 6, 8]
 start()
 
 function checkbox() {
+    //! not working correctly - must rest the game ?
     let check = document.getElementById('checkbox')
     if (check.checked == true) {
         console.log('checkbox ON')
         againstAi = true
+
     } else {
         console.log('checkbox OFF')
         againstAi = false
     }
-    // start()
 }
 
 
 
 
 function start() {
+    // todo WHO STARTS THE GAME?
+
+    gameOver = false
     firstMove = true
-    console.log('starting...')
-    tmpSymbol = 'X'
+    aiFirst = true
+    if (aiFirst) {
+        currentPlayer = Player_O
+        oponentPlayer = Player_X
+    }
+    else {
+        currentPlayer = Player_X
+        oponentPlayer = Player_O
+    }
+
     document.querySelector('.results').innerText = ''
     let area = document.querySelectorAll('.target')
     area.forEach(el => el.innerText = '')
-    checkbox()
     // area.forEach((el, index) => el.innerText = index)
     area.forEach(el => el.addEventListener('click', flip))
     arr = []
     comparsion = []
-
 }
+
+//todo LOGIC for oponent did 2 xx, block last
+
+
 
 
 function flip(el) {
     if (againstAi) {
         // ------------------------ AGAINST AI ------------------------------
-        tmpSymbol = 'X'
-        playerMoveLogic()
-        AIFlip()
+        currentPlayer = Player_X
+        playerMove()
+        if (!gameOver) aiMove()
 
     } else {
         // ------------------------ SINGLE ------------------------------
 
-        // if (XOtrue == true) tmpSymbol = 'X'
-        // else tmpSymbol = 'O'
+        playerMove()
+        if (currentPlayer == Player_X) currentPlayer = Player_O
+        else currentPlayer = Player_X
 
-        XOtrue ? tmpSymbol = 'X' : tmpSymbol = 'O'
-
-        playerMoveLogic()
-        XOtrue = !XOtrue
     }
 
-    function playerMoveLogic() {
+    function playerMove() {
         let square = document.getElementById(el.target.id)
         if (square.innerText == '') {
             square.removeEventListener('click', flip)
-            square.innerText = tmpSymbol
+            square.innerText = currentPlayer
             makeArray()
             winCheck()
         } else {
@@ -85,12 +100,12 @@ function flip(el) {
     }
 }
 
-function AIFlip() {
+function aiMove() {
     // console.log('againstAi: ' + againstAi)
     // console.log('AI Move')
 
     let target = ''
-    tmpSymbol = 'O'
+    currentPlayer = Player_O
 
     let emptyCells = []
 
@@ -100,11 +115,13 @@ function AIFlip() {
             emptyCells.push(index)
         }
     })
+    console.log('emptyCells ' + emptyCells)
 
     if (emptyCells.length != 0) {
 
-        //! AI LOGIC starts here
 
+
+        //* FIRST MOVE ONLY
         if (firstMove) {
             let firstMoveTargets = []
             emptyCells.forEach(el => {
@@ -112,40 +129,84 @@ function AIFlip() {
                     firstMoveTargets.push(el)
                 }
             })
-
             target = firstMoveTargets[Math.floor(Math.random() * firstMoveTargets.length)]
-
             console.log('firstMoveTargets: ' + firstMoveTargets)
             firstMove = false
-
             target = '#a' + target
         }
 
-
-
         else if (emptyCells.includes(4)) {
+            console.log('esam ELSE IF INCLUDES CENTER(4)')
             target = '#a4'
         }
 
-        // if (emptyCells.some(el => el % 2 == 0)) {
-        //     let tmpArr = []
-        //     for (let el of tmpArr) {
-        //         if (el % 2 == 0) {
-        //             tmpArr.push(el)
-        //         }
-        //     }
-        //     console.log('even array indexes: ' + tmpArr)
-        // }
-
         else {
+
+            //! prevencinis random target
             let rndEmptyIndex = Math.floor(Math.random() * emptyCells.length)
             target = '#a' + emptyCells[rndEmptyIndex]
+
+            //todo BLOCKING MOVE
+            //! AI LOGIC starts here
+            let winArrayVariants = winArray.length
+
+            for (let i = 0; i < winArrayVariants; i++) {
+                //! winArray[0,1,2] ar 0,1 yra x,x?
+                if ((arr[winArray[i][0]] == 'O') && (arr[winArray[i][1]] == 'O')) {
+                    console.warn('[0]&[1] are O!')
+                    console.error(winArray[i][0] + ' ' + winArray[i][1])
+                    console.log('finding missing number..')
+                    console.log(winArray[i][2])
+                    if (emptyCells.includes(winArray[i][2])) {
+                        target = '#a' + winArray[i][2]
+                    } else {
+                        let rndEmptyIndex = Math.floor(Math.random() * emptyCells.length)
+                        target = '#a' + emptyCells[rndEmptyIndex]
+                    }
+                }
+
+                else if ((arr[winArray[i][1]] == 'O') && (arr[winArray[i][2]] == 'O')) {
+                    console.warn('[1]&[2] are O!')
+                    console.error(winArray[i][1] + ' ' + winArray[i][2])
+                    console.log('finding missing number..')
+                    console.log(winArray[i][0])
+                    if (emptyCells.includes(winArray[i][0])) {
+                        target = '#a' + winArray[i][0]
+                    } else {
+                        let rndEmptyIndex = Math.floor(Math.random() * emptyCells.length)
+                        target = '#a' + emptyCells[rndEmptyIndex]
+                    }
+                }
+                else if ((arr[winArray[i][0]] == 'O') && (arr[winArray[i][2]] == 'O')) {
+                    console.warn('[0]&[2] are O!')
+                    console.error(winArray[i][0] + ' ' + winArray[i][2])
+                    console.log('finding missing number..')
+                    console.log(winArray[i][1])
+                    if (emptyCells.includes(winArray[i][1])) {
+                        target = '#a' + winArray[i][1]
+                    }
+                    else {
+                        let rndEmptyIndex = Math.floor(Math.random() * emptyCells.length)
+                        target = '#a' + emptyCells[rndEmptyIndex]
+                    }
+                }
+                // else {
+                //     let rndEmptyIndex = Math.floor(Math.random() * emptyCells.length)
+                //     console.log('generating RRRRRRRRRRRRRRRRRRRRRND for AI')
+                //     target = '#a' + emptyCells[rndEmptyIndex]
+                // }
+
+            }
+
+
         }
 
-        document.querySelector(target).innerText = 'O'
+        if (target === '') console.log('TARGET FOR AI IS EMPTY!')
+        //! MARKING TARGET ON BOARD
+        document.querySelector(target).innerText = Player_O
         document.querySelector(target).removeEventListener('click', flip)
         console.log('AI target : ' + target)
-        console.log('emptyCells ' + emptyCells)
+
 
         makeArray()
         winCheck()
@@ -172,11 +233,12 @@ function winCheck() {
         }
         // console.log('comparsion arr: ' + comparsion)
 
-        if (comparsion.every(el => el == tmpSymbol)) {
-            let winMsg = tmpSymbol + ' WIN the game!'
+        if (comparsion.every(el => el == currentPlayer)) {
+            let winMsg = currentPlayer + ' WIN the game!'
             let resultsArea = document.querySelector('.results')
             resultsArea.append(winMsg)
             removeEventListeners()
+            gameOver = true
             return
         }
         else {
