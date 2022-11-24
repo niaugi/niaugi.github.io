@@ -41,6 +41,7 @@ function checkbox() {
 
 
 function start() {
+    kampai = [0, 2, 6, 8]
     //! erase & reset FIELDS & RESULT
     document.querySelector('.results').innerText = ''
     let area = document.querySelectorAll('.target')
