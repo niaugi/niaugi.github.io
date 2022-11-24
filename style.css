@@ -13,6 +13,12 @@ header {
     /* background-color: bisque; */
 }
 
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .area {
     display: flex;
     flex-wrap: wrap;
