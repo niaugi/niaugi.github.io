@@ -163,9 +163,6 @@ function aiMove() {
                     console.log(winArray[i][2])
                     if (emptyCells.includes(winArray[i][2])) {
                         target = '#a' + winArray[i][2]
-                    } else {
-                        let rndEmptyIndex = Math.floor(Math.random() * emptyCells.length)
-                        target = '#a' + emptyCells[rndEmptyIndex]
                     }
                 }
 
@@ -176,9 +173,6 @@ function aiMove() {
                     console.log(winArray[i][0])
                     if (emptyCells.includes(winArray[i][0])) {
                         target = '#a' + winArray[i][0]
-                    } else {
-                        let rndEmptyIndex = Math.floor(Math.random() * emptyCells.length)
-                        target = '#a' + emptyCells[rndEmptyIndex]
                     }
                 }
                 else if ((arr[winArray[i][0]] == currentPlayer) && (arr[winArray[i][2]] == currentPlayer)) {
@@ -189,17 +183,7 @@ function aiMove() {
                     if (emptyCells.includes(winArray[i][1])) {
                         target = '#a' + winArray[i][1]
                     }
-                    else {
-                        let rndEmptyIndex = Math.floor(Math.random() * emptyCells.length)
-                        target = '#a' + emptyCells[rndEmptyIndex]
-                    }
                 }
-                // else {
-                //     let rndEmptyIndex = Math.floor(Math.random() * emptyCells.length)
-                //     console.log('generating RRRRRRRRRRRRRRRRRRRRRND for AI')
-                //     target = '#a' + emptyCells[rndEmptyIndex]
-                // }
-
             }
 
 
