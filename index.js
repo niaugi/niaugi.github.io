@@ -22,7 +22,7 @@ let winArray = [
 
 let kampai = [0, 2, 6, 8]
 
-// start()
+start()
 
 function checkbox() {
     //! not working correctly - must rest the game ?
