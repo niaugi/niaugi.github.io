@@ -9,6 +9,8 @@ let Player_X = 'X'
 let arr = []
 let comparsion = []
 
+
+
 let winArray = [
     [0, 1, 2],
     [3, 4, 5],
@@ -22,7 +24,7 @@ let winArray = [
 
 let kampai = [0, 2, 6, 8]
 
-start()
+reset()
 
 function checkbox() {
     //! not working correctly - must rest the game ?
@@ -37,22 +39,32 @@ function checkbox() {
     }
 }
 
+function start_test() {
+    document.querySelector('.results').innerText = ''
+    let area = document.querySelectorAll('.target')
+    area.forEach(el => el.addEventListener('click', playerFlip))
+    comparsion = []
+    gameOver = false
+    firstMove = false
+    aiMove()
+}
 
 
-
-function start() {
+function reset() {
     //! erase & reset FIELDS & RESULT
     document.querySelector('.results').innerText = ''
     let area = document.querySelectorAll('.target')
     area.forEach(el => el.innerText = '')
     area.forEach(el => el.addEventListener('click', playerFlip))
     arr = []
+    // arr = ['O', 'X', 'O', 'O', 'X', 'X', '', '', '']
     comparsion = []
     gameOver = false
     firstMove = true
 
 
     // todo WHO STARTS THE GAME?
+
     aiFirst = true
 
     if (aiFirst) {
@@ -67,6 +79,7 @@ function start() {
 
 
 }
+
 
 //todo LOGIC for oponent did 2 xx, block last
 
@@ -145,6 +158,7 @@ function aiMove() {
             //! prevencinis random target
             let rndEmptyIndex = Math.floor(Math.random() * emptyCells.length)
             target = '#a' + emptyCells[rndEmptyIndex]
+            let prevencinis = true
 
             //todo BLOCKING MOVE
             //! AI LOGIC starts here
@@ -154,38 +168,50 @@ function aiMove() {
             //todo check if AI has to block players 3rd move
 
             //* FINAL WINNING COMBINATION (3rd)
-            for (let i = 0; i < winArrayVariants; i++) {
-                //! winArray[0,1,2] ar 0,1 yra x,x?
-                if ((arr[winArray[i][0]] == currentPlayer) && (arr[winArray[i][1]] == currentPlayer)) {
-                    console.warn('[0]&[1] are O!')
-                    console.error(winArray[i][0] + ' ' + winArray[i][1])
-                    console.log('finding missing number..')
-                    console.log(winArray[i][2])
-                    if (emptyCells.includes(winArray[i][2])) {
-                        target = '#a' + winArray[i][2]
-                    }
-                }
+            let alarma = thirdMove(Player_X)
+            console.log({ alarma })
+            if (alarma) thirdMove()
 
-                else if ((arr[winArray[i][1]] == currentPlayer) && (arr[winArray[i][2]] == currentPlayer)) {
-                    console.warn('[1]&[2] are O!')
-                    console.error(winArray[i][1] + ' ' + winArray[i][2])
-                    console.log('finding missing number..')
-                    console.log(winArray[i][0])
-                    if (emptyCells.includes(winArray[i][0])) {
-                        target = '#a' + winArray[i][0]
+
+            function thirdMove(oponent) {
+                let gresme = false
+                if (oponent == Player_X) {
+                    currentPlayer = Player_X
+                    console.error('oponent == Player_X')
+                }
+                else {
+                    currentPlayer = Player_O
+                    console.warn('oponent == Player_O')
+                }
+                for (let i = 0; i < winArrayVariants; i++) {
+                    //! winArray[0,1,2] ar 0,1 yra x,x?
+                    if ((arr[winArray[i][0]] == currentPlayer) && (arr[winArray[i][1]] == currentPlayer)) {
+                        if (emptyCells.includes(winArray[i][2])) {
+                            gresme = true
+                            target = '#a' + winArray[i][2]
+                            prevencinis = false
+                        }
+                    }
+
+                    else if ((arr[winArray[i][1]] == currentPlayer) && (arr[winArray[i][2]] == currentPlayer)) {
+                        if (emptyCells.includes(winArray[i][0])) {
+                            gresme = true
+                            target = '#a' + winArray[i][0]
+                            prevencinis = false
+                        }
+                    }
+                    else if ((arr[winArray[i][0]] == currentPlayer) && (arr[winArray[i][2]] == currentPlayer)) {
+                        if (emptyCells.includes(winArray[i][1])) {
+                            gresme = true
+                            target = '#a' + winArray[i][1]
+                            prevencinis = false
+                        }
                     }
                 }
-                else if ((arr[winArray[i][0]] == currentPlayer) && (arr[winArray[i][2]] == currentPlayer)) {
-                    console.warn('[0]&[2] are O!')
-                    console.error(winArray[i][0] + ' ' + winArray[i][2])
-                    console.log('finding missing number..')
-                    console.log(winArray[i][1])
-                    if (emptyCells.includes(winArray[i][1])) {
-                        target = '#a' + winArray[i][1]
-                    }
-                }
+                return gresme
             }
 
+            console.log({ prevencinis })
 
         }
 
