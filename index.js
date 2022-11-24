@@ -42,27 +42,31 @@ function checkbox() {
 
 
 function start() {
-    // todo WHO STARTS THE GAME?
-
+    //! erase & reset fields & result
+    document.querySelector('.results').innerText = ''
+    let area = document.querySelectorAll('.target')
+    area.forEach(el => el.innerText = '')
+    area.forEach(el => el.addEventListener('click', playerFlip))
+    arr = []
+    comparsion = []
     gameOver = false
     firstMove = true
+
+
+    // todo WHO STARTS THE GAME?
     aiFirst = true
+
     if (aiFirst) {
         currentPlayer = Player_O
         oponentPlayer = Player_X
+        aiMove()
     }
     else {
         currentPlayer = Player_X
         oponentPlayer = Player_O
     }
 
-    document.querySelector('.results').innerText = ''
-    let area = document.querySelectorAll('.target')
-    area.forEach(el => el.innerText = '')
-    // area.forEach((el, index) => el.innerText = index)
-    area.forEach(el => el.addEventListener('click', flip))
-    arr = []
-    comparsion = []
+
 }
 
 //todo LOGIC for oponent did 2 xx, block last
@@ -70,26 +74,21 @@ function start() {
 
 
 
-function flip(el) {
+function playerFlip(el) {
     if (againstAi) {
         // ------------------------ AGAINST AI ------------------------------
         currentPlayer = Player_X
+        // aiMove()
+        // if (!gameOver) playerMove()
         playerMove()
         if (!gameOver) aiMove()
-
-    } else {
-        // ------------------------ SINGLE ------------------------------
-
-        playerMove()
-        if (currentPlayer == Player_X) currentPlayer = Player_O
-        else currentPlayer = Player_X
 
     }
 
     function playerMove() {
         let square = document.getElementById(el.target.id)
         if (square.innerText == '') {
-            square.removeEventListener('click', flip)
+            square.removeEventListener('click', playerFlip)
             square.innerText = currentPlayer
             makeArray()
             winCheck()
@@ -101,8 +100,11 @@ function flip(el) {
 }
 
 function aiMove() {
+    console.debug('esam aiMove')
     // console.log('againstAi: ' + againstAi)
     // console.log('AI Move')
+
+    makeArray()
 
     let target = ''
     currentPlayer = Player_O
@@ -149,6 +151,9 @@ function aiMove() {
             //todo BLOCKING MOVE
             //! AI LOGIC starts here
             let winArrayVariants = winArray.length
+
+
+            //todo check if AI has to block players 3rd move
 
             for (let i = 0; i < winArrayVariants; i++) {
                 //! winArray[0,1,2] ar 0,1 yra x,x?
@@ -204,7 +209,7 @@ function aiMove() {
         if (target === '') console.log('TARGET FOR AI IS EMPTY!')
         //! MARKING TARGET ON BOARD
         document.querySelector(target).innerText = Player_O
-        document.querySelector(target).removeEventListener('click', flip)
+        document.querySelector(target).removeEventListener('click', playerFlip)
         console.log('AI target : ' + target)
 
 
@@ -250,7 +255,7 @@ function winCheck() {
 function removeEventListeners() {
     let allFields = document.querySelectorAll('.target')
     allFields.forEach(el => {
-        el.removeEventListener('click', flip)
+        el.removeEventListener('click', playerFlip)
         console.log('removing event listener')
     })
 }
