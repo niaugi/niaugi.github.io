@@ -8,7 +8,6 @@ let Player_O = 'O'
 let Player_X = 'X'
 let arr = []
 let comparsion = []
-// let resetListener = document.querySelector('#reset').addEventListener('click', start)
 
 let winArray = [
     [0, 1, 2],
@@ -232,6 +231,7 @@ function makeArray() {
 }
 
 function winCheck() {
+    console.log('winCHECK')
     for (let winArrayNo = 0; winArrayNo < winArray.length; winArrayNo++) {
         for (let el of winArray[winArrayNo]) {
             comparsion.push(arr[el])
