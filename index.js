@@ -8,7 +8,7 @@ let Player_O = 'O'
 let Player_X = 'X'
 let arr = []
 let comparsion = []
-let resetListener = document.querySelector('#reset').addEventListener('click', start)
+// let resetListener = document.querySelector('#reset').addEventListener('click', start)
 
 let winArray = [
     [0, 1, 2],
@@ -42,7 +42,7 @@ function checkbox() {
 
 
 function start() {
-    //! erase & reset fields & result
+    //! erase & reset FIELDS & RESULT
     document.querySelector('.results').innerText = ''
     let area = document.querySelectorAll('.target')
     area.forEach(el => el.innerText = '')

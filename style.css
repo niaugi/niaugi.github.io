@@ -22,6 +22,7 @@ header {
 }
 
 .area>div {
+    position: relative;
     width: 98px;
     aspect-ratio: 1;
     border: 1px solid black;
@@ -32,12 +33,18 @@ header {
     color: black;
 }
 
-.area>div:hover {
-    /* background-color: goldenrod; */
-    outline: 2px solid red;
+.area>div:hover::after {
+    position: absolute;
+    content: '';
+    background-color: #0001;
+    color: white;
+    inset: 10px;
     cursor: pointer;
-    overflow: hidden;
 }
+
+/* .area>div:hover {
+    overflow: hidden;
+} */
 
 .results {
     margin: 2rem 0;
