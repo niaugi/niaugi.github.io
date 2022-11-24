@@ -23,7 +23,7 @@ let winArray = [
 
 let kampai = [0, 2, 6, 8]
 
-start()
+// start()
 
 function checkbox() {
     //! not working correctly - must rest the game ?
@@ -107,11 +107,10 @@ function aiMove() {
     makeArray()
 
     let target = ''
-    currentPlayer = Player_O
-
+    // currentPlayer = Player_O
     let emptyCells = []
 
-
+    //* EMPTY CELLS indexes creation
     arr.forEach((arrayEl, index) => {
         if (arrayEl == '') {
             emptyCells.push(index)
@@ -119,9 +118,8 @@ function aiMove() {
     })
     console.log('emptyCells ' + emptyCells)
 
+    //! START AI
     if (emptyCells.length != 0) {
-
-
 
         //* FIRST MOVE ONLY
         if (firstMove) {
@@ -137,6 +135,7 @@ function aiMove() {
             target = '#a' + target
         }
 
+        //* CENTER
         else if (emptyCells.includes(4)) {
             console.log('esam ELSE IF INCLUDES CENTER(4)')
             target = '#a4'
@@ -155,9 +154,10 @@ function aiMove() {
 
             //todo check if AI has to block players 3rd move
 
+            //* FINAL WINNING COMBINATION (3rd)
             for (let i = 0; i < winArrayVariants; i++) {
                 //! winArray[0,1,2] ar 0,1 yra x,x?
-                if ((arr[winArray[i][0]] == 'O') && (arr[winArray[i][1]] == 'O')) {
+                if ((arr[winArray[i][0]] == currentPlayer) && (arr[winArray[i][1]] == currentPlayer)) {
                     console.warn('[0]&[1] are O!')
                     console.error(winArray[i][0] + ' ' + winArray[i][1])
                     console.log('finding missing number..')
@@ -170,7 +170,7 @@ function aiMove() {
                     }
                 }
 
-                else if ((arr[winArray[i][1]] == 'O') && (arr[winArray[i][2]] == 'O')) {
+                else if ((arr[winArray[i][1]] == currentPlayer) && (arr[winArray[i][2]] == currentPlayer)) {
                     console.warn('[1]&[2] are O!')
                     console.error(winArray[i][1] + ' ' + winArray[i][2])
                     console.log('finding missing number..')
@@ -182,7 +182,7 @@ function aiMove() {
                         target = '#a' + emptyCells[rndEmptyIndex]
                     }
                 }
-                else if ((arr[winArray[i][0]] == 'O') && (arr[winArray[i][2]] == 'O')) {
+                else if ((arr[winArray[i][0]] == currentPlayer) && (arr[winArray[i][2]] == currentPlayer)) {
                     console.warn('[0]&[2] are O!')
                     console.error(winArray[i][0] + ' ' + winArray[i][2])
                     console.log('finding missing number..')
