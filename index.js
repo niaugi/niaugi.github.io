@@ -107,7 +107,7 @@ function aiMove() {
     makeArray()
 
     let target = ''
-    // currentPlayer = Player_O
+    currentPlayer = Player_O
     let emptyCells = []
 
     //* EMPTY CELLS indexes creation
