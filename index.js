@@ -77,14 +77,10 @@ function playerFlip(el) {
 }
 
 function aiMove() {
-    console.debug('esam aiMove')
-    // console.log('againstAi: ' + againstAi)
-    // console.log('AI Move')
-
     makeArray()
 
     let target = ''
-    currentPlayer = Player_O
+    // currentPlayer = Player_O
     emptyCells = []
 
     //* EMPTY CELLS indexes creation
@@ -103,7 +99,7 @@ function aiMove() {
     //! START AI
     if (emptyCells.length > 1) {
 
-        //* FIRST MOVE ONLY
+        //* FIRST MOVE ONLY -------------------------------
         if (firstMove) {
             let firstMoveTargets = []
             emptyCells.forEach(el => {
@@ -117,22 +113,19 @@ function aiMove() {
             target = '#a' + target
         }
 
-        //* CENTER
+        //* CENTER -------------------------------
         else if (emptyCells.includes(4)) {
             console.log('esam ELSE IF INCLUDES CENTER(4)')
             target = '#a4'
         }
-
+        //* ELSE -------------------------------
         else {
-
-
-
             //! AI LOGIC starts here
             let winArrayVariants = winArray.length
 
             //* FINAL WINNING COMBINATION (3rd)
-            thirdMove(Player_X)
-            thirdMove()
+            thirdMove(Player_X) //! check if oponent has winning combo and block it
+            thirdMove() //! target will be overwritten if AI can win with this move
 
             function thirdMove(oponent) {
                 if (oponent == Player_X) {
@@ -216,7 +209,6 @@ function winCheck() {
         let resultsArea = document.querySelector('.results')
         resultsArea.append('DRAW')
     }
-
 }
 
 function removeEventListeners() {
