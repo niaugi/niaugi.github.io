@@ -1,3 +1,7 @@
+//todo if DRAW => no shitty color background on mobile
+
+
+
 window.onload = check;
 function check() {
     document.getElementById("level1").checked = true;
