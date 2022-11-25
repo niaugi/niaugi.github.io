@@ -15,7 +15,6 @@ body {
 header {
     text-align: center;
     margin-bottom: 20px;
-    /* background-color: bisque; */
 }
 
 main {
@@ -91,6 +90,7 @@ aside {
 
 
 .area {
+    color: #000C;
     display: grid;
     width: var(--board-size);
     height: var(--board-size);
@@ -155,8 +155,6 @@ ul>span {
     font-size: 0.9rem;
     margin: 5px 0px;
 }
-
-
 
 @media only screen and (max-width: 700px) {
     body {

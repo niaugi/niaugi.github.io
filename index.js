@@ -30,6 +30,14 @@ reset()
 
 
 function reset() {
+
+    //! experiment with area reset
+    let areaForReset = document.querySelectorAll('.target')
+    areaForReset.forEach(el => {
+        el.removeEventListener('click', reset)
+        console.error('AREA not reset sensitive!')
+    })
+
     cheaterRemove()
     let letMeWin = document.querySelector('#letMeWin')
     // console.log('LetMeWin status: ' + letMeWin.checked)
@@ -253,6 +261,18 @@ function removeEventListeners() {
         el.removeEventListener('click', playerFlip)
         console.log('removing event listener')
     })
+
+    //todo Make reset on area
+
+    console.error('making area reset sensitive')
+
+    let areaForReset = document.querySelectorAll('.target')
+    areaForReset.forEach(el => {
+        el.addEventListener('click', reset)
+        console.error('AREA RESET SENSITIVE!')
+    })
+
+
 }
 
 
