@@ -292,7 +292,7 @@ function winCheck() {
             if (currentPlayer == Player_X) {
                 pointsPlayer++
                 document.querySelector('#pointsPlayer').textContent = pointsPlayer
-                if ((pointsPlayer + 1) / (pointsAI + 1) > 2) {
+                if ((pointsPlayer + 1) / (pointsAI + 1) > 3) {
                     cheater()
                 }
             }
