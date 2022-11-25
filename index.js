@@ -1,4 +1,4 @@
-console.log('version 1.2 by Niaugi')
+console.log('version 1.3 by Niaugi')
 let gameOver = false
 let currentPlayer = String
 let oponentPlayer = String
