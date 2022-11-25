@@ -37,8 +37,26 @@ main {
 
 .board-with-points {
     display: flex;
+    flex-direction: column;
     align-items: center;
 }
+
+.points-area {
+    margin-bottom: 1rem;
+}
+
+.points {
+    font-size: 3rem;
+}
+
+#pointsPlayer {
+    color: green;
+}
+
+#pointsAI {
+    color: red;
+}
+
 
 aside {
     width: 150px;
@@ -68,9 +86,7 @@ aside {
     font-weight: bold;
 }
 
-.points {
-    font-size: 3rem;
-}
+
 
 
 
@@ -138,4 +154,13 @@ ul>span {
     display: block;
     font-size: 0.9rem;
     margin: 5px 0px;
+}
+
+
+
+@media only screen and (max-width: 700px) {
+    body {
+        background-color: white;
+    }
+
 }

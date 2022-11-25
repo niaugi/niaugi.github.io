@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tic Tac Toe v1.1</title>
+    <title>Tic Tac Toe v1.2</title>
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -13,7 +13,7 @@
 <body>
 
     <header>
-        <h1>Tic Tac Toe v1.1</h1>
+        <h1>Tic Tac Toe v1.2</h1>
         <div class="ai-checkbox">
             <input type="checkbox" id="letMeWin" onclick="reset()"> Let me win sometimes :)
             <!-- <span>against AI (hardest level)</span> -->
@@ -23,10 +23,12 @@
         <div class="cheaterArea"></div>
 
         <div class="board-with-points">
-            <aside>
-                <div class="name-for-player">Player</div>
-                <div class="points" id="pointsPlayer">0</div>
-            </aside>
+
+            <div class="points-area">
+                <span class="points" id="pointsPlayer">0</span>
+                <span class="points dash">-</span>
+                <span class="points" id="pointsAI">0</span>
+            </div>
             <div class="area">
                 <div class="target" id="a0"></div>
                 <div class="target" id="a1"></div>
@@ -38,10 +40,6 @@
                 <div class="target" id="a7"></div>
                 <div class="target" id="a8"></div>
             </div>
-            <aside>
-                <div class="name-for-AI">Computer</div>
-                <div class="points" id="pointsAI">0</div>
-            </aside>
 
 
         </div>
@@ -53,6 +51,7 @@
             <button id="reset" onclick="reset()">RESET</button>
         </div>
         <ul>Versions
+            <li>1.2 - Mobile friendly</li>
             <li>1.1 - Let Me Win sometimes</li>
             <span>AI not checking for opponent's winning combo</span>
             <span>Cheater note (Player points / AI points > X in easy mode)</span>
