@@ -1,5 +1,6 @@
 console.log('version 0.6 by Niaugi')
 let gameOver = false
+let draw = false
 let currentPlayer = String
 let oponentPlayer = String
 let againstAi = true
@@ -9,8 +10,6 @@ let Player_O = 'O'
 let Player_X = 'X'
 let arr = []
 let comparsion = []
-
-
 
 let winArray = [
     [0, 1, 2],
@@ -52,9 +51,6 @@ function reset() {
     }
 }
 
-
-//todo LOGIC for oponent did 2 xx, block last
-
 function playerFlip(el) {
     if (againstAi) {
         // ------------------------ AGAINST AI ------------------------------
@@ -75,7 +71,7 @@ function playerFlip(el) {
         } else {
             console.log('field already occupied')
         }
-        console.log('------------------')
+        console.log('----------------------------')
     }
 }
 
@@ -126,24 +122,15 @@ function aiMove() {
             //! prevencinis random target
             let rndEmptyIndex = Math.floor(Math.random() * emptyCells.length)
             target = '#a' + emptyCells[rndEmptyIndex]
-            let prevencinis = true
 
-            //todo BLOCKING MOVE
             //! AI LOGIC starts here
             let winArrayVariants = winArray.length
 
-            //todo check if AI has to block players 3rd move
-
-            let tempTarget = []
-            tempTarget.push(target)
             //* FINAL WINNING COMBINATION (3rd)
-            let alarm = thirdMove(Player_X)
-            console.log({ alarm })
+            thirdMove(Player_X)
             thirdMove()
 
-
             function thirdMove(oponent) {
-                let gresme = false
                 if (oponent == Player_X) {
                     currentPlayer = Player_X
                     console.error('oponent == Player_X')
@@ -153,35 +140,24 @@ function aiMove() {
                     console.warn('oponent == Player_O')
                 }
                 for (let i = 0; i < winArrayVariants; i++) {
-                    //! winArray[0,1,2] ar 0,1 yra x,x?
                     if ((arr[winArray[i][0]] == currentPlayer) && (arr[winArray[i][1]] == currentPlayer)) {
                         if (emptyCells.includes(winArray[i][2])) {
-                            gresme = true
                             target = '#a' + winArray[i][2]
-                            prevencinis = false
                         }
                     }
 
                     else if ((arr[winArray[i][1]] == currentPlayer) && (arr[winArray[i][2]] == currentPlayer)) {
                         if (emptyCells.includes(winArray[i][0])) {
-                            gresme = true
                             target = '#a' + winArray[i][0]
-                            prevencinis = false
                         }
                     }
                     else if ((arr[winArray[i][0]] == currentPlayer) && (arr[winArray[i][2]] == currentPlayer)) {
                         if (emptyCells.includes(winArray[i][1])) {
-                            gresme = true
                             target = '#a' + winArray[i][1]
-                            prevencinis = false
                         }
                     }
                 }
-                return gresme
             }
-
-            console.log({ prevencinis })
-
         }
 
         if (target === '') console.log('TARGET FOR AI IS EMPTY!')
@@ -190,11 +166,12 @@ function aiMove() {
         document.querySelector(target).removeEventListener('click', playerFlip)
         console.log('AI target : ' + target)
 
-
         makeArray()
         winCheck()
     }
     else {
+        let resultsArea = document.querySelector('.results')
+        resultsArea.append('DRAW')
         console.log('AI removing listener')
         removeEventListeners()
     }
@@ -237,26 +214,3 @@ function removeEventListeners() {
         console.log('removing event listener')
     })
 }
-
-// function checkbox() {
-     //! not working correctly - must rest the game ?
-//     let check = document.getElementById('checkbox')
-//     if (check.checked == true) {
-//         console.log('checkbox ON')
-//         againstAi = true
-
-//     } else {
-//         console.log('checkbox OFF')
-//         againstAi = false
-//     }
-// }
-
-// function start_test() {
-//     document.querySelector('.results').innerText = ''
-//     let area = document.querySelectorAll('.target')
-//     area.forEach(el => el.addEventListener('click', playerFlip))
-//     comparsion = []
-//     gameOver = false
-//     firstMove = false
-//     aiMove()
-// }
