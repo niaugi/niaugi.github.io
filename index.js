@@ -61,7 +61,7 @@ function playerFlip(el) {
         if (!gameOver) aiMove()
     }
     else {
-        console.error('playerFlip ELSE')
+        console.error('playerFlip PLAYER FIRST')
         currentPlayer = Player_X
         playerMove()
         if (!gameOver) aiMove()
@@ -76,7 +76,7 @@ function playerFlip(el) {
             makeArray()
             winCheck()
         } else {
-            console.log('field already occupied')
+            console.error('field already occupied')
         }
         console.log('----------------------------')
     }
