@@ -1,4 +1,4 @@
-console.log('version 0.6 by Niaugi')
+console.log('version 0.8 by Niaugi')
 let gameOver = false
 let draw = false
 let currentPlayer = String
