@@ -1,4 +1,4 @@
-console.log('version 0.9 by Niaugi')
+console.log('version 0.9a by Niaugi')
 let gameOver = false
 let currentPlayer = String
 let oponentPlayer = String
@@ -80,8 +80,6 @@ function aiMove() {
     makeArray()
 
     let target = ''
-    // currentPlayer = Player_O
-
 
     //! prevencinis random target
     let rndEmptyIndex = Math.floor(Math.random() * emptyCells.length)
