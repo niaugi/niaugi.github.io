@@ -26,12 +26,12 @@ let winArray = [
 let kampai = [0, 2, 6, 8]
 let letMeWin_status = Boolean
 
-function resetCounter() {
-    pointsPlayer = 0
-    pointsAI = 0
-    document.querySelector('#pointsPlayer').textContent = 0
-    document.querySelector('#pointsAI').textContent = 0
-}
+// function resetCounter() {
+//     pointsPlayer = 0
+//     pointsAI = 0
+//     document.querySelector('#pointsPlayer').textContent = 0
+//     document.querySelector('#pointsAI').textContent = 0
+// }
 
 reset()
 
@@ -46,14 +46,13 @@ function reset() {
     })
 
     cheaterRemove()
+
     let letMeWin = document.querySelector('#letMeWin')
     // console.log('LetMeWin status: ' + letMeWin.checked)
     if (letMeWin.checked) letMeWin_status = true
     else letMeWin_status = false
 
     console.warn('Final letMeWin_status = ' + letMeWin_status)
-
-
 
     //! erase & reset FIELDS & RESULT
     document.querySelector('.results').innerText = ''
