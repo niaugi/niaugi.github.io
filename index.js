@@ -10,6 +10,7 @@ let arr = []
 let comparsion = []
 let emptyCells = []
 
+
 let winArray = [
     [0, 1, 2],
     [3, 4, 5],
