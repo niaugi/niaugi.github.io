@@ -27,30 +27,6 @@ let kampai = [0, 2, 6, 8]
 
 reset()
 
-function checkbox() {
-    //! not working correctly - must rest the game ?
-    let check = document.getElementById('checkbox')
-    if (check.checked == true) {
-        console.log('checkbox ON')
-        againstAi = true
-
-    } else {
-        console.log('checkbox OFF')
-        againstAi = false
-    }
-}
-
-function start_test() {
-    document.querySelector('.results').innerText = ''
-    let area = document.querySelectorAll('.target')
-    area.forEach(el => el.addEventListener('click', playerFlip))
-    comparsion = []
-    gameOver = false
-    firstMove = false
-    aiMove()
-}
-
-
 function reset() {
     //! erase & reset FIELDS & RESULT
     document.querySelector('.results').innerText = ''
@@ -62,10 +38,7 @@ function reset() {
     comparsion = []
     gameOver = false
     firstMove = true
-
-
     // todo WHO STARTS THE GAME?
-
     aiFirst = true
 
     if (aiFirst) {
@@ -77,15 +50,10 @@ function reset() {
         currentPlayer = Player_X
         oponentPlayer = Player_O
     }
-
-
 }
 
 
 //todo LOGIC for oponent did 2 xx, block last
-
-
-
 
 function playerFlip(el) {
     if (againstAi) {
@@ -95,7 +63,6 @@ function playerFlip(el) {
         // if (!gameOver) playerMove()
         playerMove()
         if (!gameOver) aiMove()
-
     }
 
     function playerMove() {
@@ -165,13 +132,14 @@ function aiMove() {
             //! AI LOGIC starts here
             let winArrayVariants = winArray.length
 
-
             //todo check if AI has to block players 3rd move
 
+            let tempTarget = []
+            tempTarget.push(target)
             //* FINAL WINNING COMBINATION (3rd)
-            let alarma = thirdMove(Player_X)
-            console.log({ alarma })
-            if (alarma) thirdMove()
+            let alarm = thirdMove(Player_X)
+            console.log({ alarm })
+            thirdMove()
 
 
             function thirdMove(oponent) {
@@ -247,7 +215,6 @@ function winCheck() {
         for (let el of winArray[winArrayNo]) {
             comparsion.push(arr[el])
         }
-        // console.log('comparsion arr: ' + comparsion)
 
         if (comparsion.every(el => el == currentPlayer)) {
             let winMsg = currentPlayer + ' WIN the game!'
@@ -270,3 +237,26 @@ function removeEventListeners() {
         console.log('removing event listener')
     })
 }
+
+// function checkbox() {
+     //! not working correctly - must rest the game ?
+//     let check = document.getElementById('checkbox')
+//     if (check.checked == true) {
+//         console.log('checkbox ON')
+//         againstAi = true
+
+//     } else {
+//         console.log('checkbox OFF')
+//         againstAi = false
+//     }
+// }
+
+// function start_test() {
+//     document.querySelector('.results').innerText = ''
+//     let area = document.querySelectorAll('.target')
+//     area.forEach(el => el.addEventListener('click', playerFlip))
+//     comparsion = []
+//     gameOver = false
+//     firstMove = false
+//     aiMove()
+// }
