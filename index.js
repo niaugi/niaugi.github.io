@@ -1,10 +1,9 @@
 console.log('version 0.8 by Niaugi')
 let gameOver = false
-let draw = false
 let currentPlayer = String
 let oponentPlayer = String
 let againstAi = true
-let firstMove = true  //! REMOVE when done WHO STARTS THE GAME
+let firstMove = Boolean  //! REMOVE when done WHO STARTS THE GAME
 let aiFirst = true
 let Player_O = 'O'
 let Player_X = 'X'
@@ -37,30 +36,37 @@ function reset() {
     // arr = ['O', 'X', 'O', 'O', 'X', 'X', '', '', '']
     comparsion = []
     gameOver = false
-    firstMove = true
+
     // todo WHO STARTS THE GAME?
-    aiFirst = true
 
     if (aiFirst) {
         currentPlayer = Player_O
         oponentPlayer = Player_X
+        firstMove = true
         aiMove()
     }
     else {
         currentPlayer = Player_X
         oponentPlayer = Player_O
+        firstMove = false
     }
 }
 
 function playerFlip(el) {
-    if (againstAi) {
-        // ------------------------ AGAINST AI ------------------------------
+    // if (againstAi) {
+    // ------------------------ AGAINST AI ------------------------------
+    if (aiFirst) {
         currentPlayer = Player_X
-        // aiMove()
-        // if (!gameOver) playerMove()
         playerMove()
         if (!gameOver) aiMove()
     }
+    else {
+        console.error('playerFlip ELSE')
+        currentPlayer = Player_X
+        playerMove()
+        if (!gameOver) aiMove()
+    }
+    // }
 
     function playerMove() {
         let square = document.getElementById(el.target.id)
@@ -81,23 +87,15 @@ function aiMove() {
 
     let target = ''
     // currentPlayer = Player_O
-    emptyCells = []
 
-    //* EMPTY CELLS indexes creation
-    arr.forEach((arrayEl, index) => {
-        if (arrayEl == '') {
-            emptyCells.push(index)
-        }
-    })
-    console.log('emptyCells ' + emptyCells)
 
     //! prevencinis random target
     let rndEmptyIndex = Math.floor(Math.random() * emptyCells.length)
     target = '#a' + emptyCells[rndEmptyIndex]
 
-
     //! START AI
-    if (emptyCells.length > 1) {
+    // if (emptyCells.length > 1) {
+    if (arr.some(el => el == '')) {
 
         //* FIRST MOVE ONLY -------------------------------
         if (firstMove) {
@@ -167,6 +165,7 @@ function aiMove() {
         winCheck()
     }
     else {
+        console.log({ target })
         document.querySelector(target).innerText = Player_O
         document.querySelector(target).removeEventListener('click', playerFlip)
         let resultsArea = document.querySelector('.results')
@@ -183,6 +182,17 @@ function makeArray() {
         arr.push(el.innerText)
     }
     console.log(arr)
+
+    emptyCells = []
+
+    //* EMPTY CELLS indexes creation
+    arr.forEach((arrayEl, index) => {
+        if (arrayEl == '') {
+            emptyCells.push(index)
+        }
+    })
+    console.log('emptyCells ' + emptyCells)
+
 }
 
 function winCheck() {
@@ -198,16 +208,21 @@ function winCheck() {
             resultsArea.append(winMsg)
             removeEventListeners()
             gameOver = true
+            aiFirst = !aiFirst //! reversing who starts 1st
             return
         }
         else {
             comparsion = []
         }
     }
-    if (emptyCells.length < 2) {
+    //! DRAW solution
+    if (emptyCells.length < 1) {
+        aiFirst = !aiFirst //! reversing who starts 1st
         console.log('DRAW')
         let resultsArea = document.querySelector('.results')
         resultsArea.append('DRAW')
+        gameOver = true
+        removeEventListeners()
     }
 }
 
