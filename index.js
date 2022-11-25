@@ -1,4 +1,12 @@
-console.log('version 1.3 by Niaugi')
+window.onload = check;
+function check() {
+    document.getElementById("level1").checked = true;
+}
+
+console.log('version 1.4 by Niaugi')
+let winAIColor = '#F005'
+let winPlayerColor = '#0F05'
+
 let gameOver = false
 let currentPlayer = String
 let oponentPlayer = String
@@ -25,6 +33,7 @@ let winArray = [
 
 let kampai = [0, 2, 6, 8]
 let letMeWin_status = Boolean
+let level = 1
 
 // function resetCounter() {
 //     pointsPlayer = 0
@@ -35,24 +44,40 @@ let letMeWin_status = Boolean
 
 reset()
 
+function radio() {
+    let radioStatus = document.getElementsByName('level')
+    radioStatus.forEach(el => {
+        if (el.checked == true) level = el.id[5]
+    })
+    console.log(level)
+}
+
+function randomLevel() {
+    let levelsArray = [0, 1, 2]
+    let rndLevel = Math.floor(Math.random() * levelsArray.length)
+    return rndLevel
+}
 
 function reset() {
 
+    // level = randomLevel()  // LEVEL = 0,1,2 give me new level
+    // level = 1
+    console.log({ level })
     //! experiment with area reset
     let areaForReset = document.querySelectorAll('.target')
     areaForReset.forEach(el => {
         el.removeEventListener('click', reset)
-        console.error('AREA not reset sensitive!')
+        el.style.backgroundColor = 'transparent'
     })
 
     cheaterRemove()
 
-    let letMeWin = document.querySelector('#letMeWin')
+    // let letMeWin = document.querySelector('#letMeWin')
     // console.log('LetMeWin status: ' + letMeWin.checked)
-    if (letMeWin.checked) letMeWin_status = true
-    else letMeWin_status = false
+    // if (letMeWin.checked) letMeWin_status = true
+    // else letMeWin_status = false
 
-    console.warn('Final letMeWin_status = ' + letMeWin_status)
+    // console.warn('Final letMeWin_status = ' + letMeWin_status)
 
     //! erase & reset FIELDS & RESULT
     document.querySelector('.results').innerText = ''
@@ -84,12 +109,12 @@ function playerFlip(el) {
         if (!gameOver) aiMove()
     }
     else {
-        console.error('playerFlip PLAYER FIRST')
+        // console.error('playerFlip PLAYER FIRST')
         currentPlayer = Player_X
         playerMove()
         if (!gameOver) aiMove()
     }
-
+    console.log('----------------------------')
     function playerMove() {
         let square = document.getElementById(el.target.id)
         if (square.innerText == '') {
@@ -100,13 +125,17 @@ function playerFlip(el) {
         } else {
             console.error('field already occupied')
         }
-        console.log('----------------------------')
+
     }
 }
 
 function aiMove() {
+
+
     makeArray()
 
+
+    console.log({ level })
     let target = ''
 
     //! prevencinis random target
@@ -116,9 +145,9 @@ function aiMove() {
     //! START AI
     // if (emptyCells.length > 1) {
     if (arr.some(el => el == '')) {
-
         //* FIRST MOVE ONLY -------------------------------
-        if (firstMove) {
+        if (firstMove && level > 0) { //! LEVEL 1 & 2
+
             let firstMoveTargets = []
             emptyCells.forEach(el => {
                 if (kampai.includes(el)) {
@@ -126,13 +155,13 @@ function aiMove() {
                 }
             })
             target = firstMoveTargets[Math.floor(Math.random() * firstMoveTargets.length)]
-            console.log('firstMoveTargets: ' + firstMoveTargets)
+            // console.log('firstMoveTargets: ' + firstMoveTargets)
             firstMove = false
             target = '#a' + target
         }
 
         //* CENTER -------------------------------
-        else if (emptyCells.includes(4)) {
+        else if (emptyCells.includes(4) && (!firstMove)) { //! ALL LEVELS
             console.log('esam ELSE IF INCLUDES CENTER(4)')
             target = '#a4'
         }
@@ -142,9 +171,8 @@ function aiMove() {
             let winArrayVariants = winArray.length
 
             //* FINAL WINNING COMBINATION (3rd)
-            if (!letMeWin_status) {
+            if (level == 2) { //! LEVEL 2 ONLY
                 console.warn('HARD MODE - checking if player has winning positions')
-                console.warn('letMeWin_status: ' + letMeWin_status)
                 thirdMove(Player_X) //! check if oponent has winning combo and block it
             }
             thirdMove() //! target will be overwritten if AI can win with this move
@@ -183,8 +211,18 @@ function aiMove() {
         document.querySelector(target).removeEventListener('click', playerFlip)
         console.log('AI target : ' + target)
 
+        //! disabling radio buttons if AI made a move
+        let x = document.getElementsByName('level')
+        console.error('DISABLING radio buttons')
+        x.forEach(el => {
+            el.disabled = true
+        })
+
         makeArray()
         winCheck()
+
+
+
     }
     else {
         console.log({ target })
@@ -203,7 +241,6 @@ function makeArray() {
     for (el of area) {
         arr.push(el.innerText)
     }
-    console.log(arr)
 
     emptyCells = []
 
@@ -213,19 +250,38 @@ function makeArray() {
             emptyCells.push(index)
         }
     })
-    console.log('emptyCells ' + emptyCells)
+    // console.log('emptyCells ' + emptyCells)
+
 
 }
 
 function winCheck() {
-    // cheater()
-    console.log('winCHECK')
     for (let winArrayNo = 0; winArrayNo < winArray.length; winArrayNo++) {
         for (let el of winArray[winArrayNo]) {
             comparsion.push(arr[el])
         }
 
         if (comparsion.every(el => el == currentPlayer)) {
+
+            //todo UZBRAUKIT LAIMETUS LAUKELIUS
+
+            let winColor = ''
+            let wonFields = winArray[winArrayNo]
+            wonFields.forEach(el => {
+                if (currentPlayer == Player_X) winColor = winPlayerColor
+                else {
+                    winColor = winAIColor
+                }
+                document.querySelector('#a' + el).style.backgroundColor = winColor
+            })
+
+            //* ENABLING radio buttons if AI made a move
+            let x = document.getElementsByName('level')
+            console.info('ENABLING radio buttons')
+            x.forEach(el => {
+                el.disabled = false
+            })
+
             let winMsg = currentPlayer + ' WIN the game!'
             let resultsArea = document.querySelector('.results')
             resultsArea.append(winMsg)
@@ -270,13 +326,13 @@ function removeEventListeners() {
 
     //todo Make reset on area
 
-    console.error('making area reset sensitive')
+    // console.error('making area reset sensitive')
 
     let areaForReset = document.querySelectorAll('.target')
     areaForReset.forEach(el => {
         el.addEventListener('click', reset)
-        console.error('AREA RESET SENSITIVE!')
     })
+
 
 
 }

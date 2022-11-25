@@ -66,7 +66,10 @@ aside {
 
 .ai-checkbox {
     font-size: 1.5rem;
-
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 30%;
 }
 
 #letMeWin {
@@ -84,10 +87,6 @@ aside {
     color: blue;
     font-weight: bold;
 }
-
-
-
-
 
 .area {
     color: #000C;
@@ -164,6 +163,11 @@ ul>span {
 
     header>h1 {
         display: none;
+    }
+
+    .ai-checkbox {
+        white-space: nowrap;
+        margin-left: 0;
     }
 
 }

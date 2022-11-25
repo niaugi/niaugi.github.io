@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tic Tac Toe v1.3</title>
+    <title>Tic Tac Toe v1.4</title>
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -13,9 +13,13 @@
 <body>
 
     <header>
-        <h1>Tic Tac Toe v1.3</h1>
+        <h1>Tic Tac Toe v1.4</h1>
         <div class="ai-checkbox">
-            <input type="checkbox" id="letMeWin" onclick="reset()"> Let me win sometimes :)
+            <!-- <input type="checkbox" id="letMeWin" onclick="reset()"> Let me win sometimes :) -->
+            <div><input type="radio" name="level" id="level0" onclick="radio()">Easy</div>
+            <div><input type="radio" name="level" checked="checked" id="level1" onclick="radio()">Normal</div>
+            <div><input type="radio" name="level" id="level2" onclick="radio()">Hard</div>
+
             <!-- <span>against AI (hardest level)</span> -->
         </div>
     </header>
@@ -26,7 +30,7 @@
 
             <div class="points-area">
                 <span class="points" id="pointsPlayer">0</span>
-                <span class="points dash">-</span>
+                <span class="points dash">:</span>
                 <span class="points" id="pointsAI">0</span>
             </div>
             <div class="area">
@@ -51,12 +55,15 @@
         <!-- <button id="reset" onclick="resetCounter()">RESET COUNTER</button> -->
         <!-- </div> -->
         <ul>Versions
+            <li>1.4 - Experimental leveling system</li>
+            <span>+ added colors for final row</span>
+            <span>- removed 'Let me win' option</span>
             <li>1.3 - Reset behavior</li>
-            <span>Game restarts when pressed on the board if finished</span>
+            <span>+ Game restarts when pressed on the board if finished</span>
             <li>1.2 - bit more Mobile friendly</li>
             <li>1.1 - Let Me Win sometimes</li>
-            <span>AI not checking for opponent's winning combo</span>
-            <span>Cheater note (Player points / AI points > X in easy mode)</span>
+            <span>+ AI not checking for opponent's winning combo</span>
+            <span>+ Cheater note (Player points / AI points > X in easy mode)</span>
             <li>1.0 - Points system</li>
             <li>0.9 - AI starts first every 2nd round</li>
             <li>0.8 - Fixed draw detection</li>
