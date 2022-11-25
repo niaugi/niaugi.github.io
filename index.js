@@ -10,6 +10,7 @@ let Player_O = 'O'
 let Player_X = 'X'
 let arr = []
 let comparsion = []
+let emptyCells = []
 
 let winArray = [
     [0, 1, 2],
@@ -84,7 +85,7 @@ function aiMove() {
 
     let target = ''
     currentPlayer = Player_O
-    let emptyCells = []
+    emptyCells = []
 
     //* EMPTY CELLS indexes creation
     arr.forEach((arrayEl, index) => {
@@ -94,8 +95,13 @@ function aiMove() {
     })
     console.log('emptyCells ' + emptyCells)
 
+    //! prevencinis random target
+    let rndEmptyIndex = Math.floor(Math.random() * emptyCells.length)
+    target = '#a' + emptyCells[rndEmptyIndex]
+
+
     //! START AI
-    if (emptyCells.length != 0) {
+    if (emptyCells.length > 1) {
 
         //* FIRST MOVE ONLY
         if (firstMove) {
@@ -119,9 +125,7 @@ function aiMove() {
 
         else {
 
-            //! prevencinis random target
-            let rndEmptyIndex = Math.floor(Math.random() * emptyCells.length)
-            target = '#a' + emptyCells[rndEmptyIndex]
+
 
             //! AI LOGIC starts here
             let winArrayVariants = winArray.length
@@ -170,6 +174,8 @@ function aiMove() {
         winCheck()
     }
     else {
+        document.querySelector(target).innerText = Player_O
+        document.querySelector(target).removeEventListener('click', playerFlip)
         let resultsArea = document.querySelector('.results')
         resultsArea.append('DRAW')
         console.log('AI removing listener')
@@ -205,6 +211,12 @@ function winCheck() {
             comparsion = []
         }
     }
+    if (emptyCells.length < 2) {
+        console.log('DRAW')
+        let resultsArea = document.querySelector('.results')
+        resultsArea.append('DRAW')
+    }
+
 }
 
 function removeEventListeners() {
