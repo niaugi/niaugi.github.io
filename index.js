@@ -26,6 +26,13 @@ let winArray = [
 let kampai = [0, 2, 6, 8]
 let letMeWin_status = Boolean
 
+function resetCounter() {
+    pointsPlayer = 0
+    pointsAI = 0
+    document.querySelector('#pointsPlayer').textContent = 0
+    document.querySelector('#pointsAI').textContent = 0
+}
+
 reset()
 
 
