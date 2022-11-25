@@ -1,13 +1,9 @@
-//todo if DRAW => no shitty color background on mobile
-
-
-
 window.onload = check;
 function check() {
     document.getElementById("level1").checked = true;
 }
 
-console.log('version 1.4 by Niaugi')
+console.log('version 1.5 by Niaugi')
 let winAIColor = '#F005'
 let winPlayerColor = '#0F05'
 let drawColor = '#AA05'
