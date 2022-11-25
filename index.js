@@ -2,7 +2,6 @@ console.log('version 0.9 by Niaugi')
 let gameOver = false
 let currentPlayer = String
 let oponentPlayer = String
-let againstAi = true
 let firstMove = Boolean  //! REMOVE when done WHO STARTS THE GAME
 let aiFirst = true
 let Player_O = 'O'
@@ -37,8 +36,6 @@ function reset() {
     comparsion = []
     gameOver = false
 
-    // todo WHO STARTS THE GAME?
-
     if (aiFirst) {
         currentPlayer = Player_O
         oponentPlayer = Player_X
@@ -53,8 +50,6 @@ function reset() {
 }
 
 function playerFlip(el) {
-    // if (againstAi) {
-    // ------------------------ AGAINST AI ------------------------------
     if (aiFirst) {
         currentPlayer = Player_X
         playerMove()
@@ -66,7 +61,6 @@ function playerFlip(el) {
         playerMove()
         if (!gameOver) aiMove()
     }
-    // }
 
     function playerMove() {
         let square = document.getElementById(el.target.id)
@@ -116,7 +110,7 @@ function aiMove() {
             console.log('esam ELSE IF INCLUDES CENTER(4)')
             target = '#a4'
         }
-        //* ELSE -------------------------------
+        //* 3rd 4nd move -------------------------------
         else {
             //! AI LOGIC starts here
             let winArrayVariants = winArray.length
@@ -128,11 +122,9 @@ function aiMove() {
             function thirdMove(oponent) {
                 if (oponent == Player_X) {
                     currentPlayer = Player_X
-                    console.error('oponent == Player_X')
                 }
                 else {
                     currentPlayer = Player_O
-                    console.warn('oponent == Player_O')
                 }
                 for (let i = 0; i < winArrayVariants; i++) {
                     if ((arr[winArray[i][0]] == currentPlayer) && (arr[winArray[i][1]] == currentPlayer)) {
