@@ -6,6 +6,7 @@ function check() {
 console.log('version 1.4 by Niaugi')
 let winAIColor = '#F005'
 let winPlayerColor = '#0F05'
+let drawColor = '#AA05'
 
 let gameOver = false
 let currentPlayer = String
@@ -314,6 +315,11 @@ function winCheck() {
         resultsArea.append('DRAW')
         gameOver = true
         removeEventListeners()
+
+        let allFields = document.querySelectorAll('.target')
+        allFields.forEach(el => {
+            el.style.backgroundColor = drawColor
+        })
     }
 }
 
