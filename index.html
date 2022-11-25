@@ -5,44 +5,46 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tic Tac Toe v0.9</title>
+    <title>Tic Tac Toe v1.1</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
     <header>
-        <h1>Tic Tac Toe v0.9</h1>
+        <h1>Tic Tac Toe v1.1</h1>
         <div class="ai-checkbox">
-            <!-- <input type="checkbox" checked="checled" id="checkbox" onclick="checkbox()"> -->
-            <span>against AI (hardest level)</span>
+            <input type="checkbox" id="letMeWin" onclick="reset()"> Let me win sometimes :)
+            <!-- <span>against AI (hardest level)</span> -->
         </div>
     </header>
     <main>
+        <div class="cheaterArea"></div>
 
-        <div class="area">
-            <div class="target" id="a0"></div>
-            <div class="target" id="a1"></div>
-            <div class="target" id="a2"></div>
-            <div class="target" id="a3"></div>
-            <div class="target" id="a4"></div>
-            <div class="target" id="a5"></div>
-            <div class="target" id="a6"></div>
-            <div class="target" id="a7"></div>
-            <div class="target" id="a8"></div>
+        <div class="board-with-points">
+            <aside>
+                <div class="name-for-player">Player</div>
+                <div class="points" id="pointsPlayer">0</div>
+            </aside>
+            <div class="area">
+                <div class="target" id="a0"></div>
+                <div class="target" id="a1"></div>
+                <div class="target" id="a2"></div>
+                <div class="target" id="a3"></div>
+                <div class="target" id="a4"></div>
+                <div class="target" id="a5"></div>
+                <div class="target" id="a6"></div>
+                <div class="target" id="a7"></div>
+                <div class="target" id="a8"></div>
+            </div>
+            <aside>
+                <div class="name-for-AI">Computer</div>
+                <div class="points" id="pointsAI">0</div>
+            </aside>
+
+
         </div>
 
-        <!-- <div class="area">
-            <div class="target" id="a0">O</div>
-            <div class="target" id="a1">X</div>
-            <div class="target" id="a2">O</div>
-            <div class="target" id="a3"></div>
-            <div class="target" id="a4">X</div>
-            <div class="target" id="a5">X</div>
-            <div class="target" id="a6"></div>
-            <div class="target" id="a7"></div>
-            <div class="target" id="a8"></div>
-        </div> -->
         <div class="results">
         </div>
         <div class="buttons">
@@ -50,14 +52,18 @@
             <button id="reset" onclick="reset()">RESET</button>
         </div>
         <ul>Versions
+            <li>1.1 - Let Me Win sometimes</li>
+            <span>AI not checking for opponent's winning combo</span>
+            <span>Cheater note (Player points / AI points > X in easy mode)</span>
+            <li>1.0 - Points system</li>
+            <li>0.9 - AI starts first every 2nd round</li>
+            <li>0.8 - Fixed draw detection</li>
+            <span>ToDo: Levels, points system, who start 1st, CSS cosmetics</span>
+            <li>0.7 - AI checks everything :)</li>
+            <span>Bug - no draw detection</span>
             <li>0.6 - AI checks if oponent's next move is winning</li>
             <span>Bug - AI confused if your 2nd move not a winning combo</span>
             <span>Bug - no winner message if it's the last move in an array</span>
-            <li>0.7 - AI checks everything :)</li>
-            <span>Bug - no draw detection</span>
-            <li>0.8 - Fixed draw detection</li>
-            <span>ToDo: Levels, points system, who start 1st, CSS cosmetics</span>
-            <li>0.9 - AI starts first every 2nd round</li>
         </ul>
     </main>
     <script src="index.js"></script>

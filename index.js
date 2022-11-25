@@ -1,4 +1,4 @@
-console.log('version 0.9a by Niaugi')
+console.log('version 1.1 by Niaugi')
 let gameOver = false
 let currentPlayer = String
 let oponentPlayer = String
@@ -9,7 +9,8 @@ let Player_X = 'X'
 let arr = []
 let comparsion = []
 let emptyCells = []
-
+let pointsPlayer = 0
+let pointsAI = 0
 
 let winArray = [
     [0, 1, 2],
@@ -23,10 +24,22 @@ let winArray = [
 ]
 
 let kampai = [0, 2, 6, 8]
+let letMeWin_status = Boolean
 
 reset()
 
+
 function reset() {
+    cheaterRemove()
+    let letMeWin = document.querySelector('#letMeWin')
+    // console.log('LetMeWin status: ' + letMeWin.checked)
+    if (letMeWin.checked) letMeWin_status = true
+    else letMeWin_status = false
+
+    console.warn('Final letMeWin_status = ' + letMeWin_status)
+
+
+
     //! erase & reset FIELDS & RESULT
     document.querySelector('.results').innerText = ''
     let area = document.querySelectorAll('.target')
@@ -115,7 +128,11 @@ function aiMove() {
             let winArrayVariants = winArray.length
 
             //* FINAL WINNING COMBINATION (3rd)
-            thirdMove(Player_X) //! check if oponent has winning combo and block it
+            if (!letMeWin_status) {
+                console.warn('HARD MODE - checking if player has winning positions')
+                console.warn('letMeWin_status: ' + letMeWin_status)
+                thirdMove(Player_X) //! check if oponent has winning combo and block it
+            }
             thirdMove() //! target will be overwritten if AI can win with this move
 
             function thirdMove(oponent) {
@@ -187,6 +204,7 @@ function makeArray() {
 }
 
 function winCheck() {
+    // cheater()
     console.log('winCHECK')
     for (let winArrayNo = 0; winArrayNo < winArray.length; winArrayNo++) {
         for (let el of winArray[winArrayNo]) {
@@ -200,6 +218,18 @@ function winCheck() {
             removeEventListeners()
             gameOver = true
             aiFirst = !aiFirst //! reversing who starts 1st
+            if (currentPlayer == Player_X) {
+                pointsPlayer++
+                document.querySelector('#pointsPlayer').textContent = pointsPlayer
+                if ((pointsPlayer + 1) / (pointsAI + 1) > 2) {
+                    cheater()
+                }
+            }
+            else if (currentPlayer == Player_O) {
+                pointsAI++
+                document.querySelector('#pointsAI').textContent = pointsAI
+            }
+
             return
         }
         else {
@@ -223,4 +253,13 @@ function removeEventListeners() {
         el.removeEventListener('click', playerFlip)
         console.log('removing event listener')
     })
+}
+
+
+function cheater() {
+    document.querySelector('.cheaterArea').textContent = 'Cheater :)))'
+}
+
+function cheaterRemove() {
+    document.querySelector('.cheaterArea').textContent = ''
 }

@@ -1,10 +1,15 @@
+:root {
+    --board-size: 300px;
+    --background-color: antiquewhite;
+}
+
 body {
     margin: 0;
     /* box-sizing: border-box; */
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: antiquewhite;
+    background-color: var(--background-color);
 }
 
 header {
@@ -14,29 +19,78 @@ header {
 }
 
 main {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.area {
+.cheaterArea {
+    position: absolute;
+    left: 25%;
+    top: 15%;
+    font-size: 5rem;
+    color: red;
+    transform: rotate(-35deg);
+    opacity: 0.1;
+}
+
+.board-with-points {
     display: flex;
-    flex-wrap: wrap;
-    width: 300px;
-    outline: 2px solid antiquewhite;
-    outline-offset: -2px;
+    align-items: center;
+}
+
+aside {
+    width: 150px;
+    margin-inline: 1rem;
+    text-align: center;
+    font-size: 2rem;
+}
+
+.ai-checkbox {
+    font-size: 1.5rem;
+
+}
+
+#letMeWin {
+    vertical-align: bottom;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.name-for-player {
+    color: green;
+    font-weight: bold;
+}
+
+.name-for-AI {
+    color: blue;
+    font-weight: bold;
+}
+
+.points {
+    font-size: 3rem;
+}
+
+
+
+.area {
+    display: grid;
+    width: var(--board-size);
+    height: var(--board-size);
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    overflow: hidden;
 }
 
 .area>div {
     position: relative;
-    width: 98px;
-    aspect-ratio: 1;
-    border: 1px solid black;
+    outline: 1px solid black;
 
     display: grid;
     place-content: center;
     font-size: 3rem;
-    color: black;
+    /* color: black; */
 }
 
 .area>div:hover::after {
@@ -47,10 +101,6 @@ main {
     inset: 10px;
     cursor: pointer;
 }
-
-/* .area>div:hover {
-    overflow: hidden;
-} */
 
 .results {
     margin: 2rem 0;
