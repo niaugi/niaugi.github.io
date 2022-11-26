@@ -3,12 +3,13 @@ function check() {
     document.getElementById("level1").checked = true;
 }
 
-console.log('version 1.6 by Niaugi')
+console.log('version 1.7 by Niaugi')
 let winAIColor = '#F005'
 let winPlayerColor = '#0F05'
 let drawColor = '#AA05'
 
 let gameOver = false
+let playingRandomLevel = false
 let currentPlayer = String
 let oponentPlayer = String
 let firstMove = Boolean  //! REMOVE when done WHO STARTS THE GAME
@@ -20,7 +21,6 @@ let comparsion = []
 let emptyCells = []
 let pointsPlayer = 0
 let pointsAI = 0
-
 let winArray = [
     [0, 1, 2],
     [3, 4, 5],
@@ -45,12 +45,17 @@ let level = 1
 
 reset()
 
-function radio() {
+function radio() { //! filtering LEVEL from radio buttons
     let radioStatus = document.getElementsByName('level')
     radioStatus.forEach(el => {
         if (el.checked == true) level = el.id[5]
+        playingRandomLevel = false
     })
-    console.log(level)
+    console.log('Radio turned level: ' + level)
+    if (level == 'r') {
+        playingRandomLevel = true
+        level = randomLevel()
+    }
 }
 
 function randomLevel() {
@@ -60,10 +65,12 @@ function randomLevel() {
 }
 
 function reset() {
+    if (playingRandomLevel) {
+        level = randomLevel()
+        console.warn('got random level: ' + level)
+    }
 
-    // level = randomLevel()  // LEVEL = 0,1,2 give me new level
-    // level = 1
-    console.log({ level })
+    console.log('level is: ' + level)
     //! experiment with area reset
     let areaForReset = document.querySelectorAll('.target')
     areaForReset.forEach(el => {
@@ -72,13 +79,6 @@ function reset() {
     })
 
     cheaterRemove()
-
-    // let letMeWin = document.querySelector('#letMeWin')
-    // console.log('LetMeWin status: ' + letMeWin.checked)
-    // if (letMeWin.checked) letMeWin_status = true
-    // else letMeWin_status = false
-
-    // console.warn('Final letMeWin_status = ' + letMeWin_status)
 
     //! erase & reset FIELDS & RESULT
     document.querySelector('.results').innerText = ''
@@ -131,7 +131,7 @@ function playerFlip(el) {
 }
 
 function aiMove() {
-
+    console.error('AI playing level: ' + level)
     makeArray()
     let target = ''
 
@@ -162,17 +162,7 @@ function aiMove() {
         else if (emptyCells.includes(4) && (!firstMove) && (level == 2)) { //! LEVEL 2 only
             console.log('esam ELSE IF INCLUDES CENTER(4)')
             target = '#a4'
-
-            // let rndCenter = Math.floor(Math.random() * 2) //! RND for NORMAL level
-            // if (level == 2) { //! CENTER always if level 2
-            //     console.error('CENTER rule level == 2')
-            //     target = '#a4'
-            // }
-            // else if (level < 2 && rndCenter > 0) { //! CENTER 0,1 levels & if rnd not 0
-            //     target = '#a4'
-            // }
-            // console.warn({ rndCenter })
-            firstMove = false // reik nugesint firstMove ir cia, nes level 0&1 jo nenugesina pirmam IF
+            firstMove = false
         }
         //* 3rd 4nd move -------------------------------
         else {
@@ -215,7 +205,8 @@ function aiMove() {
             }
         }
 
-        if (target === '') console.log('TARGET FOR AI IS EMPTY!')
+        if (target === '') console.error('TARGET FOR AI IS EMPTY!')
+
         //! MARKING TARGET ON BOARD
         document.querySelector(target).innerText = Player_O
         document.querySelector(target).removeEventListener('click', playerFlip)
@@ -223,7 +214,6 @@ function aiMove() {
 
         //! disabling radio buttons if AI made a move
         let x = document.getElementsByName('level')
-        // console.error('DISABLING radio buttons')
         x.forEach(el => {
             el.disabled = true
         })
