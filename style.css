@@ -18,8 +18,6 @@ header {
     margin-bottom: 20px;
 }
 
-
-
 .ai-checkbox {
     font-size: 1.2rem;
     display: flex;
@@ -94,7 +92,6 @@ main {
     position: absolute;
     content: '';
     background-color: #0001;
-    color: white;
     inset: 10px;
     cursor: pointer;
 }

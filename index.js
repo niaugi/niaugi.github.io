@@ -176,8 +176,6 @@ function aiMove() {
 
             function thirdMove(player) {
                 currentPlayer = player
-                console.error('currentPlayer: ' + currentPlayer)
-
                 for (let i = 0; i < winArrayVariants; i++) {
                     //* checking 0&1 xxo
                     if ((arr[winArray[i][0]] == currentPlayer) && (arr[winArray[i][1]] == currentPlayer)) {
@@ -203,30 +201,26 @@ function aiMove() {
 
         if (target === '') console.error('TARGET FOR AI IS EMPTY!')
 
-        //! MARKING TARGET ON BOARD
-        document.querySelector(target).innerText = Player_O
-        document.querySelector(target).removeEventListener('click', playerFlip)
-        console.log('AI target : ' + target)
+        paintTarget() //! PAINT TARGET ON BOARD
 
         //! disabling radio buttons if AI made a move
-        let x = document.getElementsByName('level')
-        x.forEach(el => {
-            el.disabled = true
-        })
+        document.getElementsByName('level').forEach(el => el.disabled = true)
 
         makeArray()
         winCheck()
     }
+
     else {
-        console.log({ target })
-        document.querySelector(target).innerText = Player_O
-        document.querySelector(target).removeEventListener('click', playerFlip)
-        let resultsArea = document.querySelector('.results')
-        resultsArea.append('DRAW')
-        console.log('AI removing listener')
+        paintTarget() //! PAINT TARGET ON BOARD
         removeEventListeners()
     }
+    function paintTarget() {
+        document.querySelector(target).innerText = Player_O
+        document.querySelector(target).removeEventListener('click', playerFlip)
+    }
 }
+
+
 
 function makeArray() {
     arr = []
@@ -268,13 +262,6 @@ function winCheck() {
                 document.querySelector('#a' + el).style.backgroundColor = winColor
             })
 
-            //* ENABLING radio buttons if AI made a move
-            let x = document.getElementsByName('level')
-            console.info('ENABLING radio buttons')
-            x.forEach(el => {
-                el.disabled = false
-            })
-
             let winMsg = currentPlayer + ' WIN the game!'
             let resultsArea = document.querySelector('.results')
             resultsArea.append(winMsg)
@@ -292,26 +279,26 @@ function winCheck() {
                 pointsAI++
                 document.querySelector('#pointsAI').textContent = pointsAI
             }
-
-            return
         }
         else {
             comparsion = []
         }
     }
     //! DRAW solution
-    if (emptyCells.length < 1) {
+    if (emptyCells.length < 1 && !gameOver) {
         aiFirst = !aiFirst //! reversing who starts 1st
         console.log('DRAW')
-        let resultsArea = document.querySelector('.results')
-        resultsArea.append('DRAW')
+        document.querySelector('.results').append('DRAW')
         gameOver = true
         removeEventListeners()
 
-        let allFields = document.querySelectorAll('.target')
-        allFields.forEach(el => {
+        document.querySelectorAll('.target').forEach(el => {
             el.style.backgroundColor = drawColor
         })
+    }
+    if (gameOver) {
+        //* ENABLING radio buttons if game over
+        document.getElementsByName('level').forEach(el => el.disabled = false)
     }
 }
 
