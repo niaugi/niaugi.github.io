@@ -143,7 +143,7 @@ function aiMove() {
 
     // if (emptyCells.length > 1) {
     if (arr.some(el => el == '')) {
-        //* FIRST MOVE ONLY -------------------------------
+        //* FIRST MOVE ONLY KAMPAI -------------------------------
         if (firstMove && level == 2) { //! LEVEL 2 ONLY
 
             let firstMoveTargets = []
@@ -159,22 +159,24 @@ function aiMove() {
 
         //* CENTER -------------------------------
 
-        else if (emptyCells.includes(4) && (!firstMove)) { //! ALL LEVELS
+        else if (emptyCells.includes(4) && (!firstMove) && (level == 2)) { //! LEVEL 2 only
             console.log('esam ELSE IF INCLUDES CENTER(4)')
+            target = '#a4'
 
-            let rndCenter = Math.floor(Math.random() * 2) //! RND for NORMAL level
-            if (level == 2) { //! CENTER always if level 2
-                console.error('CENTER rule level == 2')
-                target = '#a4'
-            }
-            else if (level < 2 && rndCenter > 0) { //! CENTER 0,1 levels & if rnd not 0
-                target = '#a4'
-            }
-            console.warn({ rndCenter })
+            // let rndCenter = Math.floor(Math.random() * 2) //! RND for NORMAL level
+            // if (level == 2) { //! CENTER always if level 2
+            //     console.error('CENTER rule level == 2')
+            //     target = '#a4'
+            // }
+            // else if (level < 2 && rndCenter > 0) { //! CENTER 0,1 levels & if rnd not 0
+            //     target = '#a4'
+            // }
+            // console.warn({ rndCenter })
             firstMove = false // reik nugesint firstMove ir cia, nes level 0&1 jo nenugesina pirmam IF
         }
         //* 3rd 4nd move -------------------------------
         else {
+            firstMove = false
             //! AI LOGIC starts here
             let winArrayVariants = winArray.length
 

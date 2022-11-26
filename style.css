@@ -12,16 +12,20 @@ body {
     background-color: var(--background-color);
 }
 
+/* HEADER  --------------------------------------------------------- */
 header {
     text-align: center;
     margin-bottom: 20px;
 }
 
-main {
-    position: relative;
+
+
+.ai-checkbox {
+    font-size: 1.5rem;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
+    margin-left: 30%;
 }
 
 .cheaterArea {
@@ -32,6 +36,14 @@ main {
     color: red;
     transform: rotate(-35deg);
     opacity: 0.1;
+}
+
+/* MAIN POINTS ------------------------------------------------------- */
+main {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .board-with-points {
@@ -56,15 +68,7 @@ main {
     color: red;
 }
 
-
-.ai-checkbox {
-    font-size: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-left: 30%;
-}
-
+/* AREA ---------------------------------------------------------------- */
 .area {
     color: #000C;
     display: grid;
@@ -95,6 +99,7 @@ main {
     cursor: pointer;
 }
 
+/* RESULTS ---------------------------------------------------------- */
 .results {
     margin: 2rem 0;
     font-size: 2rem;
@@ -119,10 +124,7 @@ button {
     background-color: lightpink;
 }
 
-.nice {
-    transition: 1s all;
-}
-
+/* VERSIONS ------------------------------------------------------------- */
 ul> :nth-child(1) {
     margin-top: 1rem;
 }
@@ -132,6 +134,8 @@ ul>span {
     font-size: 0.9rem;
     margin: 5px 0px;
 }
+
+/* MOBILE VER ------------------------------------------------------------- */
 
 @media only screen and (max-width: 700px) {
     body {
