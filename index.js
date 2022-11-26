@@ -147,7 +147,7 @@ function aiMove() {
     // if (emptyCells.length > 1) {
     if (arr.some(el => el == '')) {
         //* FIRST MOVE ONLY -------------------------------
-        if (firstMove && level > 0) { //! LEVEL 1 & 2
+        if (firstMove && level == 2) { //! LEVEL 2 ONLY
 
             let firstMoveTargets = []
             emptyCells.forEach(el => {
@@ -172,7 +172,7 @@ function aiMove() {
             let winArrayVariants = winArray.length
 
             //* FINAL WINNING COMBINATION (3rd)
-            if (level == 2) { //! LEVEL 2 ONLY
+            if (level > 0) { //! LEVEL 1 & 2
                 console.warn('HARD MODE - checking if player has winning positions')
                 thirdMove(Player_X) //! check if oponent has winning combo and block it
             }
