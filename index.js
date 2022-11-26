@@ -12,16 +12,17 @@ let gameOver = false
 let playingRandomLevel = false
 let currentPlayer = String
 let oponentPlayer = String
-let firstMove = Boolean  //! REMOVE when done WHO STARTS THE GAME
+let firstMove = Boolean
 let aiFirst = false
-let Player_O = 'O'
-let Player_X = 'X'
+const Player_X = 'X'
+const Player_O = 'O'
 let arr = []
 let comparsion = []
 let emptyCells = []
-let pointsPlayer = 0
+let level = 1
 let pointsAI = 0
-let winArray = [
+let pointsPlayer = 0
+const winArray = [
     [0, 1, 2],
     [3, 4, 5],
     [6, 7, 8],
@@ -31,17 +32,7 @@ let winArray = [
     [0, 4, 8],
     [6, 4, 2]
 ]
-
-let kampai = [0, 2, 6, 8]
-let letMeWin_status = Boolean
-let level = 1
-
-// function resetCounter() {
-//     pointsPlayer = 0
-//     pointsAI = 0
-//     document.querySelector('#pointsPlayer').textContent = 0
-//     document.querySelector('#pointsAI').textContent = 0
-// }
+const kampai = [0, 2, 6, 8]
 
 reset()
 
@@ -65,32 +56,36 @@ function randomLevel() {
 }
 
 function reset() {
+
+    gameOver = false
+
     if (playingRandomLevel) {
         level = randomLevel()
         console.warn('got random level: ' + level)
     }
+    console.warn('level is: ' + level)
 
-    console.log('level is: ' + level)
-    //! experiment with area reset
+    cheaterRemove()
+
+    //! removing reset listener for AREA ---------------------------
     let areaForReset = document.querySelectorAll('.target')
     areaForReset.forEach(el => {
         el.removeEventListener('click', reset)
         el.style.backgroundColor = 'transparent'
     })
 
-    cheaterRemove()
-
-    //! erase & reset FIELDS & RESULT
+    //! erase & reset AREA FIELDS & RESULT --------------------------
     document.querySelector('.results').innerText = ''
     let area = document.querySelectorAll('.target')
     area.forEach(el => el.innerText = '')
     area.forEach(el => el.addEventListener('click', playerFlip))
-    arr = []
-    // arr = ['O', 'X', 'O', 'O', 'X', 'X', '', '', '']
-    comparsion = []
-    gameOver = false
 
-    if (aiFirst) {
+    //! init Arrays
+    arr = []
+    comparsion = []
+
+    //! who starts first logic
+    if (aiFirst) {  //* aiFirst after WIN/DRAW will be INVERTED
         currentPlayer = Player_O
         oponentPlayer = Player_X
         firstMove = true
@@ -102,6 +97,8 @@ function reset() {
         firstMove = false
     }
 }
+
+//! EventListener from player press goes HERE:
 
 function playerFlip(el) {
     if (aiFirst) {
@@ -124,9 +121,8 @@ function playerFlip(el) {
             makeArray()
             winCheck()
         } else {
-            console.error('field already occupied')
+            console.error('field already occupied') //! this line should never be reached :)
         }
-
     }
 }
 
@@ -165,6 +161,7 @@ function aiMove() {
             firstMove = false
         }
         //* 3rd 4nd move -------------------------------
+        //! Will be reached if ANY of above gave target
         else {
             firstMove = false
             //! AI LOGIC starts here
@@ -175,27 +172,26 @@ function aiMove() {
                 console.warn('level 1 & 2 - checking if player has winning positions')
                 thirdMove(Player_X) //! check if oponent has winning combo and block it
             }
-            thirdMove() //! target will be overwritten if AI can win with this move
+            thirdMove(Player_O) //! target will be overwritten if AI can win with this move
 
-            function thirdMove(oponent) {
-                if (oponent == Player_X) {
-                    currentPlayer = Player_X
-                }
-                else {
-                    currentPlayer = Player_O
-                }
+            function thirdMove(player) {
+                currentPlayer = player
+                console.error('currentPlayer: ' + currentPlayer)
+
                 for (let i = 0; i < winArrayVariants; i++) {
+                    //* checking 0&1 xxo
                     if ((arr[winArray[i][0]] == currentPlayer) && (arr[winArray[i][1]] == currentPlayer)) {
                         if (emptyCells.includes(winArray[i][2])) {
                             target = '#a' + winArray[i][2]
                         }
                     }
-
+                    //* checking 1&2 oxx
                     else if ((arr[winArray[i][1]] == currentPlayer) && (arr[winArray[i][2]] == currentPlayer)) {
                         if (emptyCells.includes(winArray[i][0])) {
                             target = '#a' + winArray[i][0]
                         }
                     }
+                    //* checking 0&2 xox
                     else if ((arr[winArray[i][0]] == currentPlayer) && (arr[winArray[i][2]] == currentPlayer)) {
                         if (emptyCells.includes(winArray[i][1])) {
                             target = '#a' + winArray[i][1]
@@ -220,9 +216,6 @@ function aiMove() {
 
         makeArray()
         winCheck()
-
-
-
     }
     else {
         console.log({ target })
