@@ -102,15 +102,18 @@ function reset() {
 
 function playerFlip(el) {
     if (aiFirst) {
+        console.time()
         currentPlayer = Player_X
         playerMove()
         if (!gameOver) aiMove()
+        console.timeEnd()
     }
     else {
-        // console.error('playerFlip PLAYER FIRST')
+        console.time()
         currentPlayer = Player_X
         playerMove()
         if (!gameOver) aiMove()
+        console.timeEnd()
     }
     console.log('----------------------------')
     function playerMove() {
@@ -252,6 +255,8 @@ function winCheck() {
 
             //todo UZBRAUKIT LAIMETUS LAUKELIUS
 
+            gameOver = true
+            aiFirst = !aiFirst //! reversing who starts 1st
             let winColor = ''
             let wonFields = winArray[winArrayNo]
             wonFields.forEach(el => {
@@ -261,13 +266,9 @@ function winCheck() {
                 }
                 document.querySelector('#a' + el).style.backgroundColor = winColor
             })
-
             let winMsg = currentPlayer + ' WIN the game!'
-            let resultsArea = document.querySelector('.results')
-            resultsArea.append(winMsg)
+            document.querySelector('.results').append(winMsg)
             removeEventListeners()
-            gameOver = true
-            aiFirst = !aiFirst //! reversing who starts 1st
             if (currentPlayer == Player_X) {
                 pointsPlayer++
                 document.querySelector('#pointsPlayer').textContent = pointsPlayer
@@ -278,6 +279,10 @@ function winCheck() {
             else if (currentPlayer == Player_O) {
                 pointsAI++
                 document.querySelector('#pointsAI').textContent = pointsAI
+
+                if ((pointsAI + 1) / (pointsPlayer + 1) > 3) {
+                    console.log('PLAYER NEEDS HELP!')
+                }
             }
         }
         else {
