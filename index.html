@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tic Tac Toe v1.5</title>
+    <title>Tic Tac Toe v1.6</title>
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -13,12 +13,12 @@
 <body>
 
     <header>
-        <h1>Tic Tac Toe v1.5</h1>
+        <h1>Tic Tac Toe v1.6</h1>
         <div class="ai-checkbox">
             <!-- <input type="checkbox" id="letMeWin" onclick="reset()"> Let me win sometimes :) -->
-            <div><input type="radio" name="level" id="level0" onclick="radio()">Easy</div>
+            <div><input type="radio" name="level" id="level0" onclick="radio()">No AI</div>
             <div><input type="radio" name="level" checked="checked" id="level1" onclick="radio()">Normal</div>
-            <div><input type="radio" name="level" id="level2" onclick="radio()">Hard</div>
+            <div><input type="radio" name="level" id="level2" onclick="radio()">Never win</div>
 
             <!-- <span>against AI (hardest level)</span> -->
         </div>
@@ -55,6 +55,7 @@
         <!-- <button id="reset" onclick="resetCounter()">RESET COUNTER</button> -->
         <!-- </div> -->
         <ul>Versions
+            <li>1.6 Finetuned AI levels, Normal more organic now</li>
             <li>1.5 CSS play effects</li>
             <li>1.4 Experimental leveling system</li>
             <span>+ added colors for winner & draw</span>

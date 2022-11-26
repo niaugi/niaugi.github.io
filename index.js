@@ -3,7 +3,7 @@ function check() {
     document.getElementById("level1").checked = true;
 }
 
-console.log('version 1.5 by Niaugi')
+console.log('version 1.6 by Niaugi')
 let winAIColor = '#F005'
 let winPlayerColor = '#0F05'
 let drawColor = '#AA05'
@@ -144,6 +144,8 @@ function aiMove() {
     target = '#a' + emptyCells[rndEmptyIndex]
 
     //! START AI
+
+
     // if (emptyCells.length > 1) {
     if (arr.some(el => el == '')) {
         //* FIRST MOVE ONLY -------------------------------
@@ -162,9 +164,20 @@ function aiMove() {
         }
 
         //* CENTER -------------------------------
+
         else if (emptyCells.includes(4) && (!firstMove)) { //! ALL LEVELS
             console.log('esam ELSE IF INCLUDES CENTER(4)')
-            target = '#a4'
+
+            let rndCenter = Math.floor(Math.random() * 2) //! RND for NORMAL level
+            if (level == 2) { //! CENTER always if level 2
+                console.error('CENTER rule level == 2')
+                target = '#a4'
+            }
+            else if (level < 2 && rndCenter > 0) { //! CENTER 0,1 levels & if rnd not 0
+                target = '#a4'
+            }
+            console.warn({ rndCenter })
+            firstMove = false
         }
         //* 3rd 4nd move -------------------------------
         else {
@@ -214,7 +227,7 @@ function aiMove() {
 
         //! disabling radio buttons if AI made a move
         let x = document.getElementsByName('level')
-        console.error('DISABLING radio buttons')
+        // console.error('DISABLING radio buttons')
         x.forEach(el => {
             el.disabled = true
         })
