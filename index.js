@@ -132,11 +132,7 @@ function playerFlip(el) {
 
 function aiMove() {
 
-
     makeArray()
-
-
-    console.log({ level })
     let target = ''
 
     //! prevencinis random target
@@ -144,7 +140,6 @@ function aiMove() {
     target = '#a' + emptyCells[rndEmptyIndex]
 
     //! START AI
-
 
     // if (emptyCells.length > 1) {
     if (arr.some(el => el == '')) {
@@ -158,7 +153,6 @@ function aiMove() {
                 }
             })
             target = firstMoveTargets[Math.floor(Math.random() * firstMoveTargets.length)]
-            // console.log('firstMoveTargets: ' + firstMoveTargets)
             firstMove = false
             target = '#a' + target
         }
@@ -177,7 +171,7 @@ function aiMove() {
                 target = '#a4'
             }
             console.warn({ rndCenter })
-            firstMove = false
+            firstMove = false // reik nugesint firstMove ir cia, nes level 0&1 jo nenugesina pirmam IF
         }
         //* 3rd 4nd move -------------------------------
         else {
@@ -186,7 +180,7 @@ function aiMove() {
 
             //* FINAL WINNING COMBINATION (3rd)
             if (level > 0) { //! LEVEL 1 & 2
-                console.warn('HARD MODE - checking if player has winning positions')
+                console.warn('level 1 & 2 - checking if player has winning positions')
                 thirdMove(Player_X) //! check if oponent has winning combo and block it
             }
             thirdMove() //! target will be overwritten if AI can win with this move
@@ -343,24 +337,17 @@ function removeEventListeners() {
         console.log('removing event listener')
     })
 
-    //todo Make reset on area
-
-    // console.error('making area reset sensitive')
+    //! console.error('making area reset sensitive')
 
     let areaForReset = document.querySelectorAll('.target')
     areaForReset.forEach(el => {
         el.addEventListener('click', reset)
     })
-
-
-
 }
-
 
 function cheater() {
     document.querySelector('.cheaterArea').textContent = 'Cheater :)))'
 }
-
 function cheaterRemove() {
     document.querySelector('.cheaterArea').textContent = ''
 }
