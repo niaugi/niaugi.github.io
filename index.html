@@ -14,9 +14,9 @@
 
     <header>
         <h1>Tic Tac Toe v1.7</h1>
-        <div class="ai-checkbox">
+        <div class="radio-checkbox">
             <!-- <input type="checkbox" id="letMeWin" onclick="reset()"> Let me win sometimes :) -->
-            <div><input type="radio" name="level" id="level0" onclick="radio()">No AI</div>
+            <div class="radioHelp"><input type="radio" name="level" id="level0" onclick="radio()">No AI</div>
             <div><input type="radio" name="level" checked="checked" id="level1" onclick="radio()">Normal</div>
             <div><input type="radio" name="level" id="level2" onclick="radio()">Never win</div>
             <div><input type="radio" name="level" id="levelr" onclick="radio()">Random level</div>
@@ -49,13 +49,15 @@
 
         </div>
 
-        <div class="results">
+        <div class="result">
         </div>
         <!-- <div class="buttons"> -->
         <!-- <button id="start" onclick="start_test()">START TEST COMBINATION</button> -->
         <!-- <button id="reset" onclick="resetCounter()">RESET COUNTER</button> -->
         <!-- </div> -->
         <ul>Versions
+            <li>1.8 Cleaner and more effective code</li>
+            <span>* ToDo: AI against AI</span>
             <li>1.7 Random level (you never know how good IT is..)</li>
             <li>1.6 Finetuned AI levels, Normal more organic now</li>
             <li>1.5 CSS play effects</li>

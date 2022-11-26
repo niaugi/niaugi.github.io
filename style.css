@@ -18,13 +18,19 @@ header {
     margin-bottom: 20px;
 }
 
-.ai-checkbox {
+.radio-checkbox {
     font-size: 1.2rem;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     margin-left: 25%;
 }
+
+/* .radioHelp {
+    outline: 2px solid red;
+    padding-right: 10px;
+    animation: mirga 1s delay iteration-count direction fill-mode;
+} */
 
 .cheaterArea {
     position: absolute;
@@ -97,7 +103,7 @@ main {
 }
 
 /* RESULTS ---------------------------------------------------------- */
-.results {
+.result {
     margin: 2rem 0;
     font-size: 2rem;
     text-align: center;

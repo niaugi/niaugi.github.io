@@ -3,7 +3,7 @@ function check() {
     document.getElementById("level1").checked = true;
 }
 
-console.log('version 1.7 by Niaugi')
+console.log('version 1.8 by Niaugi')
 let winAIColor = '#F005'
 let winPlayerColor = '#0F05'
 let drawColor = '#AA05'
@@ -13,7 +13,7 @@ let playingRandomLevel = false
 let currentPlayer = String
 let oponentPlayer = String
 let firstMove = Boolean
-let aiFirst = false
+let aiFirst = false  //! change to TRUE if AI has to start 1st
 const Player_X = 'X'
 const Player_O = 'O'
 let arr = []
@@ -68,24 +68,22 @@ function reset() {
     cheaterRemove()
 
     //! removing reset listener for AREA ---------------------------
-    let areaForReset = document.querySelectorAll('.target')
-    areaForReset.forEach(el => {
+    let area = document.querySelectorAll('.target')
+    area.forEach(el => {
         el.removeEventListener('click', reset)
         el.style.backgroundColor = 'transparent'
     })
-
-    //! erase & reset AREA FIELDS & RESULT --------------------------
-    document.querySelector('.results').innerText = ''
-    let area = document.querySelectorAll('.target')
+    //* erase & reset AREA FIELDS & RESULT --------------------------
     area.forEach(el => el.innerText = '')
     area.forEach(el => el.addEventListener('click', playerFlip))
+    document.querySelector('.result').innerText = ''
 
-    //! init Arrays
+    //* init Arrays
     arr = []
     comparsion = []
 
-    //! who starts first logic
-    if (aiFirst) {  //* aiFirst after WIN/DRAW will be INVERTED
+    //? who starts first logic
+    if (aiFirst) {  //! aiFirst after WIN/DRAW will be INVERTED
         currentPlayer = Player_O
         oponentPlayer = Player_X
         firstMove = true
@@ -98,23 +96,13 @@ function reset() {
     }
 }
 
-//! EventListener from player press goes HERE:
-
+//* EventListener from player press goes HERE:
 function playerFlip(el) {
-    if (aiFirst) {
-        console.time()
-        currentPlayer = Player_X
-        playerMove()
-        if (!gameOver) aiMove()
-        console.timeEnd()
-    }
-    else {
-        console.time()
-        currentPlayer = Player_X
-        playerMove()
-        if (!gameOver) aiMove()
-        console.timeEnd()
-    }
+
+    currentPlayer = Player_X
+    playerMove()
+    if (!gameOver) aiMove()
+
     console.log('----------------------------')
     function playerMove() {
         let square = document.getElementById(el.target.id)
@@ -122,6 +110,7 @@ function playerFlip(el) {
             square.removeEventListener('click', playerFlip)
             square.innerText = currentPlayer
             makeArray()
+            makeEmptyCells()
             winCheck()
         } else {
             console.error('field already occupied') //! this line should never be reached :)
@@ -131,20 +120,21 @@ function playerFlip(el) {
 
 function aiMove() {
     console.error('AI playing level: ' + level)
-    makeArray()
+    makeArray() //! returns arr[] of occupied fields
+    makeEmptyCells()
     let target = ''
 
-    //! prevencinis random target
+    //* prevencinis random target
     let rndEmptyIndex = Math.floor(Math.random() * emptyCells.length)
     target = '#a' + emptyCells[rndEmptyIndex]
 
     //! START AI
 
     // if (emptyCells.length > 1) {
-    if (arr.some(el => el == '')) {
+    if (arr.some(el => el == '')) { //! if nothing be true, instant paint target with RND target
+
         //* FIRST MOVE ONLY KAMPAI -------------------------------
         if (firstMove && level == 2) { //! LEVEL 2 ONLY
-
             let firstMoveTargets = []
             emptyCells.forEach(el => {
                 if (kampai.includes(el)) {
@@ -210,6 +200,7 @@ function aiMove() {
         document.getElementsByName('level').forEach(el => el.disabled = true)
 
         makeArray()
+        makeEmptyCells()
         winCheck()
     }
 
@@ -224,26 +215,24 @@ function aiMove() {
 }
 
 
-
 function makeArray() {
     arr = []
     let area = document.querySelectorAll('.target')
     for (el of area) {
         arr.push(el.innerText)
     }
+}
 
-    emptyCells = []
-
+function makeEmptyCells() {
     //* EMPTY CELLS indexes creation
+    emptyCells = []
     arr.forEach((arrayEl, index) => {
         if (arrayEl == '') {
             emptyCells.push(index)
         }
     })
-    // console.log('emptyCells ' + emptyCells)
-
-
 }
+
 
 function winCheck() {
     for (let winArrayNo = 0; winArrayNo < winArray.length; winArrayNo++) {
@@ -267,7 +256,7 @@ function winCheck() {
                 document.querySelector('#a' + el).style.backgroundColor = winColor
             })
             let winMsg = currentPlayer + ' WIN the game!'
-            document.querySelector('.results').append(winMsg)
+            document.querySelector('.result').append(winMsg)
             removeEventListeners()
             if (currentPlayer == Player_X) {
                 pointsPlayer++
@@ -293,7 +282,7 @@ function winCheck() {
     if (emptyCells.length < 1 && !gameOver) {
         aiFirst = !aiFirst //! reversing who starts 1st
         console.log('DRAW')
-        document.querySelector('.results').append('DRAW')
+        document.querySelector('.result').append('DRAW')
         gameOver = true
         removeEventListeners()
 
