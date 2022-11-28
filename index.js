@@ -15,7 +15,7 @@ console.log('version 1.9 by Niaugi')
 let winAIColor = '#F005'
 let winPlayerColor = '#0F05'
 let drawColor = '#AA05'
-let AI_mode_only = true //! NEW -------**********--------
+let AI_mode_only = false //! NEW -------**********--------
 let gameOver = false
 let playingRandomLevel = false
 let currentPlayer = String
