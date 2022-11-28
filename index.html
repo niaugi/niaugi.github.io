@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tic Tac Toe v1.8</title>
+    <title>Tic Tac Toe v1.9</title>
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -13,9 +13,9 @@
 <body>
 
     <header>
-        <h1>Tic Tac Toe v1.8</h1>
+        <h1>Tic Tac Toe v1.9</h1>
         <div class="radio-checkbox">
-            <!-- <input type="checkbox" id="letMeWin" onclick="reset()"> Let me win sometimes :) -->
+            <div><input type="checkbox" id="AIvsAI" onclick="AIvsAI()">AI vs AI</div>
             <div class="radioHelp"><input type="radio" name="level" id="level0" onclick="radio()">No AI</div>
             <div><input type="radio" name="level" checked="checked" id="level1" onclick="radio()">Normal</div>
             <div><input type="radio" name="level" id="level2" onclick="radio()">Never win</div>
@@ -56,6 +56,7 @@
         <!-- <button id="reset" onclick="resetCounter()">RESET COUNTER</button> -->
         <!-- </div> -->
         <ul>Versions
+            <li>1.9 AI vs AI (early experimental version)</li>
             <li>1.8 Cleaner and more effective code</li>
             <span>* ToDo: AI against AI</span>
             <li>1.7 Random level (you never know how good IT is..)</li>

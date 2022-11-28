@@ -1,19 +1,27 @@
+
+//! HSL COLORS!
+
 window.onload = check;
 function check() {
     document.getElementById("level1").checked = true;
 }
 
-console.log('version 1.8 by Niaugi')
+// window.onload = checkAi;
+// function checkAi() {
+//     document.getElementById("AIvsAI").checked = false
+// }
+
+console.log('version 1.9 by Niaugi')
 let winAIColor = '#F005'
 let winPlayerColor = '#0F05'
 let drawColor = '#AA05'
-
+let AI_mode_only = true //! NEW -------**********--------
 let gameOver = false
 let playingRandomLevel = false
 let currentPlayer = String
 let oponentPlayer = String
 let firstMove = Boolean
-let aiFirst = false  //! change to TRUE if AI has to start 1st
+let aiFirst = true  //! change to TRUE if AI has to start 1st
 const Player_X = 'X'
 const Player_O = 'O'
 let arr = []
@@ -36,6 +44,19 @@ const kampai = [0, 2, 6, 8]
 
 reset()
 
+function AIvsAI() {
+    let AIMode = document.querySelector('#AIvsAI')
+    console.log('AIMode checked status: ' + AIMode.checked)
+    if (AIMode.checked == true) {
+        //todo AIvsAI tournament
+        AI_mode_only = true
+    } else {
+        AI_mode_only = false
+    }
+    console.log({ AI_mode_only })
+    reset()
+}
+
 function radio() { //! filtering LEVEL from radio buttons
     let radioStatus = document.getElementsByName('level')
     radioStatus.forEach(el => {
@@ -49,6 +70,7 @@ function radio() { //! filtering LEVEL from radio buttons
     }
 }
 
+//! NEW FUNCTION -------------------***********************-----------
 function randomLevel() {
     let levelsArray = [0, 1, 2]
     let rndLevel = Math.floor(Math.random() * levelsArray.length)
@@ -75,15 +97,39 @@ function reset() {
     })
     //* erase & reset AREA FIELDS & RESULT --------------------------
     area.forEach(el => el.innerText = '')
-    area.forEach(el => el.addEventListener('click', playerFlip))
+    if (!AI_mode_only) area.forEach(el => el.addEventListener('click', playerFlip))
     document.querySelector('.result').innerText = ''
 
     //* init Arrays
     arr = []
     comparsion = []
 
+    //! NEW for AI --------------******************-------------------
+    firstMove = true
+    if (AI_mode_only) {
+        // level = 1 //! SUTVARKYT level, nes AI ONLY nepaima LEVEL is RADIO ---------------***********
+
+        // for (let i = 0; i < 10; i++) {
+        // gameOver = false
+        while (!gameOver) {
+            console.warn('AI vs AI playing level ' + level)
+            currentPlayer = Player_X
+            oponentPlayer = Player_O
+            aiMove()
+            if (!gameOver) {
+                currentPlayer = Player_O
+                oponentPlayer = Player_X
+                aiMove()
+            } else {
+                console.error('had to break from WHILE')
+                // removeEventListeners()
+            }
+        }
+        // }
+    }
+
     //? who starts first logic
-    if (aiFirst) {  //! aiFirst after WIN/DRAW will be INVERTED
+    else if (aiFirst) {  //! aiFirst after WIN/DRAW will be INVERTED
         currentPlayer = Player_O
         oponentPlayer = Player_X
         firstMove = true
@@ -100,7 +146,10 @@ function reset() {
 function playerFlip(el) {
 
     currentPlayer = Player_X
+    oponentPlayer = Player_O
     playerMove()
+    currentPlayer = Player_O
+    oponentPlayer = Player_X
     if (!gameOver) aiMove()
 
     console.log('----------------------------')
@@ -119,7 +168,7 @@ function playerFlip(el) {
 }
 
 function aiMove() {
-    console.error('AI playing level: ' + level)
+    console.log('AI playing level: ' + level)
     makeArray() //! returns arr[] of occupied fields
     makeEmptyCells()
     let target = ''
@@ -130,109 +179,115 @@ function aiMove() {
 
     //! START AI
 
-    // if (emptyCells.length > 1) {
-    if (arr.some(el => el == '')) { //! if nothing be true, instant paint target with RND target
-
-        //* FIRST MOVE ONLY KAMPAI -------------------------------
-        if (firstMove && level == 2) { //! LEVEL 2 ONLY
-            let firstMoveTargets = []
-            emptyCells.forEach(el => {
-                if (kampai.includes(el)) {
-                    firstMoveTargets.push(el)
-                }
-            })
-            target = firstMoveTargets[Math.floor(Math.random() * firstMoveTargets.length)]
-            firstMove = false
-            target = '#a' + target
-        }
-
-        //* CENTER -------------------------------
-
-        else if (emptyCells.includes(4) && (!firstMove) && (level == 2)) { //! LEVEL 2 only
-            console.log('esam ELSE IF INCLUDES CENTER(4)')
-            target = '#a4'
-            firstMove = false
-        }
-        //* 3rd 4nd move -------------------------------
-        //! Will be reached if ANY of above gave target
-        else {
-            firstMove = false
-            //! AI LOGIC starts here
-            let winArrayVariants = winArray.length
-
-            //* FINAL WINNING COMBINATION (3rd)
-            if (level > 0) { //! LEVEL 1 & 2
-                console.warn('level 1 & 2 - checking if player has winning positions')
-                thirdMove(Player_X) //! check if oponent has winning combo and block it
+    //! if nothing be true, instant paint target with RND target
+    //* FIRST MOVE ONLY KAMPAI -------------------------------
+    if (firstMove && level == 2) { //! LEVEL 2 ONLY
+        let firstMoveTargets = []
+        emptyCells.forEach(el => {
+            if (kampai.includes(el)) {
+                firstMoveTargets.push(el)
             }
-            thirdMove(Player_O) //! target will be overwritten if AI can win with this move
-
-            function thirdMove(player) {
-                currentPlayer = player
-                for (let i = 0; i < winArrayVariants; i++) {
-                    //* checking 0&1 xxo
-                    if ((arr[winArray[i][0]] == currentPlayer) && (arr[winArray[i][1]] == currentPlayer)) {
-                        if (emptyCells.includes(winArray[i][2])) {
-                            target = '#a' + winArray[i][2]
-                        }
-                    }
-                    //* checking 1&2 oxx
-                    else if ((arr[winArray[i][1]] == currentPlayer) && (arr[winArray[i][2]] == currentPlayer)) {
-                        if (emptyCells.includes(winArray[i][0])) {
-                            target = '#a' + winArray[i][0]
-                        }
-                    }
-                    //* checking 0&2 xox
-                    else if ((arr[winArray[i][0]] == currentPlayer) && (arr[winArray[i][2]] == currentPlayer)) {
-                        if (emptyCells.includes(winArray[i][1])) {
-                            target = '#a' + winArray[i][1]
-                        }
-                    }
-                }
-            }
-        }
-
-        if (target === '') console.error('TARGET FOR AI IS EMPTY!')
-
-        paintTarget() //! PAINT TARGET ON BOARD
-
-        //! disabling radio buttons if AI made a move
-        document.getElementsByName('level').forEach(el => el.disabled = true)
-
-        makeArray()
-        makeEmptyCells()
-        winCheck()
+        })
+        target = firstMoveTargets[Math.floor(Math.random() * firstMoveTargets.length)]
+        firstMove = false
+        target = '#a' + target
     }
 
+    //* CENTER -------------------------------
+
+    else if (emptyCells.includes(4) && (!firstMove) && (level == 2)) { //! LEVEL 2 only
+        console.log('esam ELSE IF INCLUDES CENTER(4)')
+        target = '#a4'
+        firstMove = false
+    }
+    //* 3rd 4nd move -------------------------------
+    //! Will be reached if ANY of above gave target
     else {
-        paintTarget() //! PAINT TARGET ON BOARD
-        removeEventListeners()
+        firstMove = false
+        //! AI LOGIC starts here
+        let winArrayVariants = winArray.length
+
+        //* FINAL WINNING COMBINATION (3rd)
+        if (level > 0) { //! LEVEL 1 & 2
+            console.log('level 1 & 2 - checking if player has winning positions')
+            // thirdMove(Player_X) //! check if oponent has winning combo and block it
+            thirdMove(oponentPlayer) //! target will be overwritten if AI can win with this move
+            // thirdMove(Player_O) //! target will be overwritten if AI can win with this move
+            thirdMove(currentPlayer) //! check if oponent has winning combo and block it
+        }
+
+        function thirdMove(player) {
+            // console.warn('esame thirdMove funkc - player is: ' + player)
+            // currentPlayer = player
+            for (let i = 0; i < winArrayVariants; i++) {
+                //* checking 0&1 xxo
+                // if ((arr[winArray[i][0]] == currentPlayer) && (arr[winArray[i][1]] == currentPlayer)) {
+                if ((arr[winArray[i][0]] == player) && (arr[winArray[i][1]] == player)) {
+                    if (emptyCells.includes(winArray[i][2])) {
+                        target = '#a' + winArray[i][2]
+                    }
+                }
+                //* checking 1&2 oxx
+                // else if ((arr[winArray[i][1]] == currentPlayer) && (arr[winArray[i][2]] == currentPlayer)) {
+                else if ((arr[winArray[i][1]] == player) && (arr[winArray[i][2]] == player)) {
+                    if (emptyCells.includes(winArray[i][0])) {
+                        target = '#a' + winArray[i][0]
+                    }
+                }
+                //* checking 0&2 xox
+                // else if ((arr[winArray[i][0]] == currentPlayer) && (arr[winArray[i][2]] == currentPlayer)) {
+                else if ((arr[winArray[i][0]] == player) && (arr[winArray[i][2]] == player)) {
+                    if (emptyCells.includes(winArray[i][1])) {
+                        target = '#a' + winArray[i][1]
+                    }
+                }
+            }
+        }
     }
+
+    if (target === '') console.error('TARGET FOR AI IS EMPTY!') //should never be processed
+
+
+    //! disabling radio buttons if AI made a move
+    document.getElementsByName('level').forEach(el => el.disabled = true)
+    console.log('AI painting target')
+
+    //todo EXPERIMENTAL WAIT
+    // setTimeout(() => {
+    //     paintTarget()
+    // }, 100);
+
+    paintTarget() //! PAINT TARGET and remove event listener
+
+    makeArray()
+    makeEmptyCells()
+    winCheck()
+
+    //! paint target & remove event listener
     function paintTarget() {
-        document.querySelector(target).innerText = Player_O
+        console.log({ target })
+        if (AI_mode_only) {
+            document.querySelector(target).innerText = currentPlayer
+        } else {
+            document.querySelector(target).innerText = Player_O
+        }
         document.querySelector(target).removeEventListener('click', playerFlip)
     }
 }
 
-
+//* ARRAY of fields with X & O
 function makeArray() {
     arr = []
-    let area = document.querySelectorAll('.target')
-    for (el of area) {
-        arr.push(el.innerText)
-    }
+    document.querySelectorAll('.target').forEach(el => arr.push(el.innerText))
 }
 
+//* ARRAY of EMPTY fields
 function makeEmptyCells() {
-    //* EMPTY CELLS indexes creation
     emptyCells = []
     arr.forEach((arrayEl, index) => {
-        if (arrayEl == '') {
-            emptyCells.push(index)
-        }
+        if (arrayEl == '') emptyCells.push(index)
     })
 }
-
 
 function winCheck() {
     for (let winArrayNo = 0; winArrayNo < winArray.length; winArrayNo++) {
@@ -241,7 +296,10 @@ function winCheck() {
         }
 
         if (comparsion.every(el => el == currentPlayer)) {
+            // if (comparsion.every(el => el == oponentPlayer)) {
 
+            console.warn('esam WINCHECK, current player: ' + currentPlayer)
+            console.warn('esam WINCHECK, opponent player: ' + oponentPlayer)
             //todo UZBRAUKIT LAIMETUS LAUKELIUS
 
             gameOver = true
@@ -250,9 +308,7 @@ function winCheck() {
             let wonFields = winArray[winArrayNo]
             wonFields.forEach(el => {
                 if (currentPlayer == Player_X) winColor = winPlayerColor
-                else {
-                    winColor = winAIColor
-                }
+                if (currentPlayer == Player_O) winColor = winAIColor
                 document.querySelector('#a' + el).style.backgroundColor = winColor
             })
             let winMsg = currentPlayer + ' WIN the game!'
@@ -292,6 +348,7 @@ function winCheck() {
     }
     if (gameOver) {
         //* ENABLING radio buttons if game over
+        console.warn('--- GAME OVER ---')
         document.getElementsByName('level').forEach(el => el.disabled = false)
     }
 }
