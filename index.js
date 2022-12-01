@@ -213,13 +213,12 @@ function aiMove() {
         firstMove = false
         target = '#a' + target
         stepWasRandom = false
-        console.log('AI KAMPAI')
+        console.log('AI CORNERS')
     }
 
     //* CENTER ------------- 2nd MOVE (CENTER) ------------------
 
     else if (emptyCells.includes(4) && (!firstMove) && (level == 2)) { //! LEVEL 2 only
-        console.log('esam ELSE IF INCLUDES CENTER(4)')
         target = '#a4'
         firstMove = false
         stepWasRandom = false
@@ -228,7 +227,7 @@ function aiMove() {
     //* ------------------------ 3rd 4th move -------------------------------
     //! Will be reached if ANY of above gave target
     else {
-        console.log('AI 3rd')
+        console.log('AI LOGIC 3rd')
         firstMove = false
         //! AI LOGIC starts here
         let winArrayVariants = winArray.length
