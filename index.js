@@ -188,7 +188,7 @@ function playerFlip(el) {
 }
 
 function aiMove() {
-    console.log('AI playing level: ' + level)
+    // console.log('AI playing level: ' + level)
     makeArray() //! returns arr[] of occupied fields
     makeEmptyCells()
     let target = ''
