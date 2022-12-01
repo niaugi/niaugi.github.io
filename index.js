@@ -278,7 +278,6 @@ function aiMove() {
 
     //! disabling radio buttons if AI made a move
     document.getElementsByName('level').forEach(el => el.disabled = true)
-    console.log('AI painting target')
 
     //todo EXPERIMENTAL WAIT
     // setTimeout(() => {
