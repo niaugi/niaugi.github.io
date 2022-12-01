@@ -122,6 +122,8 @@ function start() {
                 reverseAI()
             } else {
                 console.error('break from WHILE')
+                console.log('=================================================')
+                console.log('=================================================')
             }
         }
 
@@ -172,7 +174,8 @@ function playerFlip(el) {
     oponentPlayer = Player_X
     if (!gameOver) aiMove()
 
-    console.log('----------------------------')
+    console.log('=================================================')
+    console.log('=================================================')
     function playerMove() {
         let square = document.getElementById(el.target.id)
         if (square.innerText == '') {
