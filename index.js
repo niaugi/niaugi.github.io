@@ -121,7 +121,7 @@ function start() {
                 aiMove()
                 reverseAI()
             } else {
-                console.error('had to break from WHILE')
+                console.error('break from WHILE')
             }
         }
 
