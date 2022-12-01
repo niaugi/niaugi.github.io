@@ -11,11 +11,15 @@ function check() {
 //     document.getElementById("AIvsAI").checked = false
 // }
 
-console.log('version 1.9 by Niaugi')
+let gameHistory = []
+
+console.log('version 1.9a by Niaugi')
+
+let stepWasRandom = false
 let winAIColor = '#F005'
 let winPlayerColor = '#0F05'
 let drawColor = '#AA05'
-let AI_mode_only = false //! NEW -------**********--------
+let AI_mode_only = false //! AI MODE
 let gameOver = false
 let playingRandomLevel = false
 let currentPlayer = String
@@ -42,19 +46,15 @@ const winArray = [
 ]
 const kampai = [0, 2, 6, 8]
 
-reset()
+start()
 
 function AIvsAI() {
     let AIMode = document.querySelector('#AIvsAI')
     console.log('AIMode checked status: ' + AIMode.checked)
-    if (AIMode.checked == true) {
-        //todo AIvsAI tournament
-        AI_mode_only = true
-    } else {
-        AI_mode_only = false
-    }
+    if (AIMode.checked == true) AI_mode_only = true
+    else AI_mode_only = false
     console.log({ AI_mode_only })
-    reset()
+    start()
 }
 
 function radio() { //! filtering LEVEL from radio buttons
@@ -77,9 +77,7 @@ function randomLevel() {
     return rndLevel
 }
 
-function reset() {
-
-    gameOver = false
+function start() {
 
     if (playingRandomLevel) {
         level = randomLevel()
@@ -87,12 +85,10 @@ function reset() {
     }
     console.warn('level is: ' + level)
 
-    cheaterRemove()
-
     //! removing reset listener for AREA ---------------------------
     let area = document.querySelectorAll('.target')
     area.forEach(el => {
-        el.removeEventListener('click', reset)
+        el.removeEventListener('click', start)
         el.style.backgroundColor = 'transparent'
     })
     //* erase & reset AREA FIELDS & RESULT --------------------------
@@ -104,28 +100,52 @@ function reset() {
     arr = []
     comparsion = []
 
-    //! NEW for AI --------------******************-------------------
+    gameOver = false
     firstMove = true
-    if (AI_mode_only) {
-        // level = 1 //! SUTVARKYT level, nes AI ONLY nepaima LEVEL is RADIO ---------------***********
 
+    //! NEW for AI --------------******************-------------------
+    if (AI_mode_only) {
+
+        // level = 2 //! AI LEVEL 2 !!!!!!!!!!!!!!!!!!!!!!!
+        whoStartsAI()
         // for (let i = 0; i < 10; i++) {
         // gameOver = false
+
         while (!gameOver) {
-            console.warn('AI vs AI playing level ' + level)
-            currentPlayer = Player_X
-            oponentPlayer = Player_O
+            // console.warn('AI vs AI playing level ' + level)
+
             aiMove()
+            reverseAI()
+
             if (!gameOver) {
-                currentPlayer = Player_O
-                oponentPlayer = Player_X
                 aiMove()
+                reverseAI()
             } else {
                 console.error('had to break from WHILE')
-                // removeEventListeners()
             }
         }
+
         // }
+
+        function reverseAI() {
+            if (currentPlayer == Player_X) {
+                currentPlayer = Player_O
+                oponentPlayer = Player_X
+            } else {
+                currentPlayer = Player_X
+                oponentPlayer = Player_O
+            }
+        }
+
+        function whoStartsAI() {
+            if (aiFirst) {
+                currentPlayer = Player_X
+                oponentPlayer = Player_O
+            } else {
+                currentPlayer = Player_O
+                oponentPlayer = Player_X
+            }
+        }
     }
 
     //? who starts first logic
@@ -176,11 +196,12 @@ function aiMove() {
     //* prevencinis random target
     let rndEmptyIndex = Math.floor(Math.random() * emptyCells.length)
     target = '#a' + emptyCells[rndEmptyIndex]
+    stepWasRandom = true
 
     //! START AI
 
     //! if nothing be true, instant paint target with RND target
-    //* FIRST MOVE ONLY KAMPAI -------------------------------
+    //* FIRST MOVE ONLY KAMPAI ------------- 1st MOVE (CORNER) ------------------
     if (firstMove && level == 2) { //! LEVEL 2 ONLY
         let firstMoveTargets = []
         emptyCells.forEach(el => {
@@ -191,18 +212,23 @@ function aiMove() {
         target = firstMoveTargets[Math.floor(Math.random() * firstMoveTargets.length)]
         firstMove = false
         target = '#a' + target
+        stepWasRandom = false
+        console.log('AI KAMPAI')
     }
 
-    //* CENTER -------------------------------
+    //* CENTER ------------- 2nd MOVE (CENTER) ------------------
 
     else if (emptyCells.includes(4) && (!firstMove) && (level == 2)) { //! LEVEL 2 only
         console.log('esam ELSE IF INCLUDES CENTER(4)')
         target = '#a4'
         firstMove = false
+        stepWasRandom = false
+        console.log('AI CENTER')
     }
-    //* 3rd 4nd move -------------------------------
+    //* ------------------------ 3rd 4th move -------------------------------
     //! Will be reached if ANY of above gave target
     else {
+        console.log('AI 3rd')
         firstMove = false
         //! AI LOGIC starts here
         let winArrayVariants = winArray.length
@@ -225,6 +251,7 @@ function aiMove() {
                 if ((arr[winArray[i][0]] == player) && (arr[winArray[i][1]] == player)) {
                     if (emptyCells.includes(winArray[i][2])) {
                         target = '#a' + winArray[i][2]
+                        stepWasRandom = false
                     }
                 }
                 //* checking 1&2 oxx
@@ -232,6 +259,7 @@ function aiMove() {
                 else if ((arr[winArray[i][1]] == player) && (arr[winArray[i][2]] == player)) {
                     if (emptyCells.includes(winArray[i][0])) {
                         target = '#a' + winArray[i][0]
+                        stepWasRandom = false
                     }
                 }
                 //* checking 0&2 xox
@@ -239,6 +267,7 @@ function aiMove() {
                 else if ((arr[winArray[i][0]] == player) && (arr[winArray[i][2]] == player)) {
                     if (emptyCells.includes(winArray[i][1])) {
                         target = '#a' + winArray[i][1]
+                        stepWasRandom = false
                     }
                 }
             }
@@ -267,11 +296,16 @@ function aiMove() {
     function paintTarget() {
         console.log({ target })
         if (AI_mode_only) {
-            document.querySelector(target).innerText = currentPlayer
-        } else {
-            document.querySelector(target).innerText = Player_O
+            document.querySelector(target).innerHTML = currentPlayer
+            if (stepWasRandom) gameHistory.push(target + ' ' + currentPlayer + ' ' + 'random')
+            else gameHistory.push(target + ' ' + currentPlayer)
+            console.warn('step was random: ' + stepWasRandom)
         }
-        document.querySelector(target).removeEventListener('click', playerFlip)
+        else {
+            document.querySelector(target).innerText = Player_O
+            document.querySelector(target).removeEventListener('click', playerFlip)
+            console.warn('step was random: ' + stepWasRandom)
+        }
     }
 }
 
@@ -296,14 +330,12 @@ function winCheck() {
         }
 
         if (comparsion.every(el => el == currentPlayer)) {
-            // if (comparsion.every(el => el == oponentPlayer)) {
-
-            console.warn('esam WINCHECK, current player: ' + currentPlayer)
-            console.warn('esam WINCHECK, opponent player: ' + oponentPlayer)
             //todo UZBRAUKIT LAIMETUS LAUKELIUS
 
             gameOver = true
             aiFirst = !aiFirst //! reversing who starts 1st
+
+            //* COLOR OF WON FIELDS
             let winColor = ''
             let wonFields = winArray[winArrayNo]
             wonFields.forEach(el => {
@@ -311,23 +343,20 @@ function winCheck() {
                 if (currentPlayer == Player_O) winColor = winAIColor
                 document.querySelector('#a' + el).style.backgroundColor = winColor
             })
+
+            //* WIN MESSAGE
             let winMsg = currentPlayer + ' WIN the game!'
             document.querySelector('.result').append(winMsg)
             removeEventListeners()
+
+            //* POINTS
             if (currentPlayer == Player_X) {
                 pointsPlayer++
                 document.querySelector('#pointsPlayer').textContent = pointsPlayer
-                if ((pointsPlayer + 1) / (pointsAI + 1) > 3) {
-                    cheater()
-                }
             }
             else if (currentPlayer == Player_O) {
                 pointsAI++
                 document.querySelector('#pointsAI').textContent = pointsAI
-
-                if ((pointsAI + 1) / (pointsPlayer + 1) > 3) {
-                    console.log('PLAYER NEEDS HELP!')
-                }
             }
         }
         else {
@@ -349,6 +378,8 @@ function winCheck() {
     if (gameOver) {
         //* ENABLING radio buttons if game over
         console.warn('--- GAME OVER ---')
+        console.table(gameHistory)
+        gameHistory = []
         document.getElementsByName('level').forEach(el => el.disabled = false)
     }
 }
@@ -364,13 +395,6 @@ function removeEventListeners() {
 
     let areaForReset = document.querySelectorAll('.target')
     areaForReset.forEach(el => {
-        el.addEventListener('click', reset)
+        el.addEventListener('click', start)
     })
-}
-
-function cheater() {
-    document.querySelector('.cheaterArea').textContent = 'Cheater :)))'
-}
-function cheaterRemove() {
-    document.querySelector('.cheaterArea').textContent = ''
 }
