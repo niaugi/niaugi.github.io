@@ -190,4 +190,7 @@ footer {
         margin-left: 0;
     }
 
+    .result {
+        white-space: nowrap;
+    }
 }
