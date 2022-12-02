@@ -15,8 +15,7 @@
     <header>
         <h1>Tic Tac Toe v2.0</h1>
         <div class="radio-checkbox">
-            <div><input type="checkbox" id="AIvsAI" onclick="AIvsAI()">AI vs AI</div>
-            <div><input type="radio" name="level" id="level0" onclick="radio()">No AI</div>
+            <div><input type="radio" name="level" id="level0" onclick="radio()">No brains</div>
             <div><input type="radio" name="level" checked="checked" id="level1" onclick="radio()">Normal</div>
             <div><input type="radio" name="level" id="level2" onclick="radio()">Hard</div>
             <div><input type="radio" name="level" id="levelr" onclick="radio()">Random</div>
@@ -33,10 +32,10 @@
                 <span class="points" id="pointsAI">0</span>
             </div>
 
-            <div class="emergency-stop">
-                <span>AI speed</span>
-                <input type="range" min="1" max="100" value="50" class="slider" id="AIspeed">
-                <button id="stop">STOP</button>
+            <div class="slider">
+                <div><input type="checkbox" id="AIvsAI" onclick="AIvsAI()">AI vs AI</div>
+                <input type="range" min="1" max="1000" value="700" class="slider" id="AIspeed">
+                <span id="sliderOutput"></span>
             </div>
 
             <div class="area">
@@ -51,44 +50,42 @@
                 <div class="target" id="a8"></div>
             </div>
 
-
+            <div class="result">
+            </div>
         </div>
 
-        <div class="result">
+
+        <div class="versions">
+            <span class="spec-info">AI more info: inspect > console</span>
+            <ul>Versions
+                <li>2.0 CSS, AI vs AI speed & delayed animation</li>
+                <li>1.9 AI vs AI</li>
+                <li>1.8 Cleaner and more effective code</li>
+                <span>* ToDo: AI against AI</span>
+                <li>1.7 Random level (you never know how good IT is..)</li>
+                <li>1.6 Finetuned AI levels, Normal more organic now</li>
+                <li>1.5 CSS play effects</li>
+                <li>1.4 Experimental leveling system</li>
+                <span>+ added colors for winner & draw</span>
+                <span>* ToDo: cross out the winner with a fine line</span>
+                <span>- removed 'Let me win' option</span>
+                <li>1.3 Reset behavior</li>
+                <span>+ Game restarts if pressed on the board when finished</span>
+                <li>1.2 bit more Mobile friendly</li>
+                <li>1.1 Let Me Win sometimes</li>
+                <span>+ AI not checking for opponent's winning combo</span>
+                <span>+ Cheater note (Player points / AI points > X in easy mode)</span>
+                <li>1.0 Points system</li>
+                <li>0.9 AI starts first every 2nd round</li>
+                <li>0.8 Fixed draw detection</li>
+                <span>* ToDo: Levels, points system, who start 1st, CSS cosmetics</span>
+                <li>0.7 AI checks everything :)</li>
+                <span>Bug - no draw detection</span>
+                <li>0.6 AI checks if oponent's next move is winning</li>
+                <span>Bug - AI confused if your 2nd move not a winning combo</span>
+                <span>Bug - no winner message if it's the last move in an array</span>
+            </ul>
         </div>
-        <!-- <div class="buttons"> -->
-        <!-- <button id="start" onclick="start_test()">START TEST COMBINATION</button> -->
-        <!-- <button id="reset" onclick="resetCounter()">RESET COUNTER</button> -->
-        <!-- </div> -->
-        AI more info: inspect > console
-        <ul>Versions
-            <li>2.0 CSS, AI vs AI speed & delayed animation</li>
-            <li>1.9 AI vs AI</li>
-            <li>1.8 Cleaner and more effective code</li>
-            <span>* ToDo: AI against AI</span>
-            <li>1.7 Random level (you never know how good IT is..)</li>
-            <li>1.6 Finetuned AI levels, Normal more organic now</li>
-            <li>1.5 CSS play effects</li>
-            <li>1.4 Experimental leveling system</li>
-            <span>+ added colors for winner & draw</span>
-            <span>* ToDo: cross out the winner with a fine line</span>
-            <span>- removed 'Let me win' option</span>
-            <li>1.3 Reset behavior</li>
-            <span>+ Game restarts if pressed on the board when finished</span>
-            <li>1.2 bit more Mobile friendly</li>
-            <li>1.1 Let Me Win sometimes</li>
-            <span>+ AI not checking for opponent's winning combo</span>
-            <span>+ Cheater note (Player points / AI points > X in easy mode)</span>
-            <li>1.0 Points system</li>
-            <li>0.9 AI starts first every 2nd round</li>
-            <li>0.8 Fixed draw detection</li>
-            <span>* ToDo: Levels, points system, who start 1st, CSS cosmetics</span>
-            <li>0.7 AI checks everything :)</li>
-            <span>Bug - no draw detection</span>
-            <li>0.6 AI checks if oponent's next move is winning</li>
-            <span>Bug - AI confused if your 2nd move not a winning combo</span>
-            <span>Bug - no winner message if it's the last move in an array</span>
-        </ul>
     </main>
     <footer>
         <span>Tic Tac Toe by Niaugi 2022</span>

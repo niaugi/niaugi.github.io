@@ -17,54 +17,38 @@ body {
 /* HEADER  --------------------------------------------------------- */
 header {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .radio-checkbox {
-    font-size: 1.2rem;
+    font-size: 1rem;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     margin-left: 20%;
 }
 
-.radio-checkbox #AIvsAI {
-    /* width: 1.5rem; */
-    height: 1.5rem;
-    vertical-align: middle;
-    margin-bottom: .5rem;
-    margin-right: .5rem;
-}
 
-.radio-checkbox div+div {
-    /* background-color: lightcoral; */
-    margin-left: 1rem;
+.radio-checkbox div {
+    margin: 2px 10px;
 }
 
 .radio-checkbox input {
+    vertical-align: sub;
+    margin: 0 10px;
     width: 1.5rem;
     height: 1.5rem;
 }
 
-.cheaterArea {
-    position: absolute;
-    left: 25%;
-    top: 15%;
-    font-size: 5rem;
-    color: red;
-    transform: rotate(-35deg);
-    opacity: 0.1;
-}
-
 /* MAIN POINTS ------------------------------------------------------- */
 main {
-    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 .board-with-points {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -86,23 +70,47 @@ main {
     color: red;
 }
 
-/* EMERGENCY STOP ------------------------------------------------------ */
+/* RESULTS ---------------------------------------------------------- */
+.result {
+    position: absolute;
+    bottom: -3rem;
+    left: 2rem;
+    right: 2rem;
+    /* background-color: red; */
+    font-size: 2rem;
+    text-align: center;
+}
 
-.emergency-stop {
-    display: none;
-    /* display: flex; */
+/* SLIDER ----------------------------------------------------------- */
+
+.slider {
+    /* display: none; */
+    display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
     margin-bottom: 1rem;
 }
 
-#stop {
-    background-color: lightcoral;
-    padding: 0.8rem 1.2rem;
-    color: white;
-    border: none;
-    box-shadow: 0 0 10px 0 #0005;
+.slider #AIvsAI {
+    font-size: 1.2rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    vertical-align: middle;
+    margin-bottom: .5rem;
+    margin-right: .5rem;
+}
+
+
+#AIspeed {
+    opacity: 0.7
+}
+
+#AIspeed:hover {
+    opacity: 1;
+}
+
+#sliderOutput {
+    margin-top: -0.5rem;
 }
 
 /* AREA ---------------------------------------------------------------- */
@@ -134,32 +142,19 @@ main {
     cursor: pointer;
 }
 
-/* RESULTS ---------------------------------------------------------- */
-.result {
-    margin: 2rem 0;
-    font-size: 2rem;
-    text-align: center;
-}
 
-button {
-    display: inline-block;
-    margin-inline: auto;
-    padding: .5rem 1rem;
-}
-
-#start {
-    background-color: lightgreen;
-}
-
-.buttons {
-    text-align: center;
-}
-
-#reset {
-    background-color: lightpink;
-}
 
 /* VERSIONS ------------------------------------------------------------- */
+.versions {
+    margin-top: 5rem;
+    opacity: 0.7;
+}
+
+.spec-info {
+    display: block;
+    text-align: center;
+}
+
 ul> :nth-child(1) {
     margin-top: 1rem;
 }
