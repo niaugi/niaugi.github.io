@@ -46,37 +46,9 @@ const winArray = [
 ]
 const kampai = [0, 2, 6, 8]
 
-start()
+start()      //! --------------------------- START THE GAME ---------------------------
 
-function AIvsAI() {
-    let AIMode = document.querySelector('#AIvsAI')
-    console.log('AIMode checked status: ' + AIMode.checked)
-    if (AIMode.checked == true) AI_mode_only = true
-    else AI_mode_only = false
-    console.log({ AI_mode_only })
-    start()
-}
-
-function radio() { //! filtering LEVEL from radio buttons
-    let radioStatus = document.getElementsByName('level')
-    radioStatus.forEach(el => {
-        if (el.checked == true) level = el.id[5]
-        playingRandomLevel = false
-    })
-    console.log('Radio turned level: ' + level)
-    if (level == 'r') {
-        playingRandomLevel = true
-        level = randomLevel()
-    }
-}
-
-//! NEW FUNCTION -------------------***********************-----------
-function randomLevel() {
-    let levelsArray = [0, 1, 2]
-    let rndLevel = Math.floor(Math.random() * levelsArray.length)
-    return rndLevel
-}
-
+//! ----------------------------------------- START ---------------------------------------
 function start() {
 
     if (playingRandomLevel) {
@@ -85,7 +57,7 @@ function start() {
     }
     console.warn('level is: ' + level)
 
-    //! removing reset listener for AREA ---------------------------
+    //* removing reset listener for AREA ---------------------------
     let area = document.querySelectorAll('.target')
     area.forEach(el => {
         el.removeEventListener('click', start)
@@ -103,25 +75,20 @@ function start() {
     gameOver = false
     firstMove = true
 
-    //! NEW for AI --------------******************-------------------
     if (AI_mode_only) {
 
-        // level = 2 //! AI LEVEL 2 !!!!!!!!!!!!!!!!!!!!!!!
+        // level = 2 //! MANUAL AI LEVEL
         whoStartsAI()
         // for (let i = 0; i < 10; i++) {
         // gameOver = false
 
         while (!gameOver) {
-            // console.warn('AI vs AI playing level ' + level)
-
             aiMove()
             reverseAI()
-
             if (!gameOver) {
                 aiMove()
                 reverseAI()
             } else {
-                console.error('break from WHILE')
                 console.log('=================================================')
                 console.log('=================================================')
             }
@@ -150,8 +117,8 @@ function start() {
         }
     }
 
-    //? who starts first logic
-    else if (aiFirst) {  //! aiFirst after WIN/DRAW will be INVERTED
+    //* ----------------------- PLAYER vs AI - who starts first logic -----------------------
+    else if (aiFirst) {  //? aiFirst after WIN/DRAW will be INVERTED
         currentPlayer = Player_O
         oponentPlayer = Player_X
         firstMove = true
@@ -162,6 +129,37 @@ function start() {
         oponentPlayer = Player_O
         firstMove = false
     }
+}
+
+//* is AI vs AI selected?
+function AIvsAI() {
+    let AIMode = document.querySelector('#AIvsAI')
+    console.log('AIMode checked status: ' + AIMode.checked)
+    if (AIMode.checked == true) AI_mode_only = true
+    else AI_mode_only = false
+    console.log({ AI_mode_only })
+    start()
+}
+
+//* filtering LEVEL from radio buttons
+function radio() {
+    let radioStatus = document.getElementsByName('level')
+    radioStatus.forEach(el => {
+        if (el.checked == true) level = el.id[5]
+        playingRandomLevel = false
+    })
+    console.log('Radio turned level: ' + level)
+    if (level == 'r') {
+        playingRandomLevel = true
+        level = randomLevel()
+    }
+}
+
+//* random level if random radio button selected
+function randomLevel() {
+    let levelsArray = [0, 1, 2]
+    let rndLevel = Math.floor(Math.random() * levelsArray.length)
+    return rndLevel
 }
 
 //* EventListener from player press goes HERE:
@@ -192,7 +190,7 @@ function playerFlip(el) {
 
 function aiMove() {
     // console.log('AI playing level: ' + level)
-    makeArray() //! returns arr[] of occupied fields
+    makeArray() //* returns arr[] of occupied fields
     makeEmptyCells()
     let target = ''
 
@@ -202,7 +200,6 @@ function aiMove() {
     stepWasRandom = true
 
     //! START AI
-
     //! if nothing be true, instant paint target with RND target
     //* FIRST MOVE ONLY KAMPAI ------------- 1st MOVE (CORNER) ------------------
     if (firstMove && level == 2) { //! LEVEL 2 ONLY
@@ -213,7 +210,6 @@ function aiMove() {
             }
         })
         target = firstMoveTargets[Math.floor(Math.random() * firstMoveTargets.length)]
-        firstMove = false
         target = '#a' + target
         stepWasRandom = false
         console.log('AI CORNERS')
@@ -223,7 +219,6 @@ function aiMove() {
 
     else if (emptyCells.includes(4) && (!firstMove) && (level == 2)) { //! LEVEL 2 only
         target = '#a4'
-        firstMove = false
         stepWasRandom = false
         console.log('AI CENTER')
     }
@@ -231,7 +226,6 @@ function aiMove() {
     //! Will be reached if ANY of above gave target
     else {
         console.log('AI LOGIC 3rd')
-        firstMove = false
         //! AI LOGIC starts here
         let winArrayVariants = winArray.length
 
@@ -275,6 +269,7 @@ function aiMove() {
             }
         }
     }
+    firstMove = false
 
     if (target === '') console.error('TARGET FOR AI IS EMPTY!') //should never be processed
 
