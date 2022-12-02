@@ -28,11 +28,23 @@ header {
     margin-left: 20%;
 }
 
-/* .radioHelp {
-    outline: 2px solid red;
-    padding-right: 10px;
-    animation: mirga 1s delay iteration-count direction fill-mode;
-} */
+.radio-checkbox #AIvsAI {
+    /* width: 1.5rem; */
+    height: 1.5rem;
+    vertical-align: middle;
+    margin-bottom: .5rem;
+    margin-right: .5rem;
+}
+
+.radio-checkbox div+div {
+    /* background-color: lightcoral; */
+    margin-left: 1rem;
+}
+
+.radio-checkbox input {
+    width: 1.5rem;
+    height: 1.5rem;
+}
 
 .cheaterArea {
     position: absolute;
@@ -156,7 +168,7 @@ footer {
         display: none;
     }
 
-    .ai-checkbox {
+    .radio-checkbox {
         white-space: nowrap;
         margin-left: 0;
     }

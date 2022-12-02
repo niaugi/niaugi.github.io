@@ -13,7 +13,7 @@ function check() {
 
 let gameHistory = []
 
-console.log('version 1.9a by Niaugi')
+console.log('version 1.9b by Niaugi')
 
 let stepWasRandom = false
 let winAIColor = '#F005'
