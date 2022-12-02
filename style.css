@@ -74,8 +74,8 @@ main {
 .result {
     position: absolute;
     bottom: -3rem;
-    left: 2rem;
-    right: 2rem;
+    left: 0rem;
+    right: 0rem;
     /* background-color: red; */
     font-size: 2rem;
     text-align: center;
