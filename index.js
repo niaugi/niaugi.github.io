@@ -4,6 +4,7 @@
 window.onload = check;
 function check() {
     document.getElementById("level1").checked = true;
+    document.getElementById("AIvsAI").checked = false;
 }
 
 // window.onload = checkAi;
@@ -13,19 +14,20 @@ function check() {
 
 let gameHistory = []
 
-console.log('version 1.9b by Niaugi')
+console.log('version 2.0 by Niaugi')
 
+let AI_mode_only = false //! AI MODE
+
+let aiFirst = false  //! change to TRUE if AI has to start 1st
 let stepWasRandom = false
 let winAIColor = '#F005'
 let winPlayerColor = '#0F05'
 let drawColor = '#AA05'
-let AI_mode_only = false //! AI MODE
 let gameOver = false
 let playingRandomLevel = false
 let currentPlayer = String
 let oponentPlayer = String
 let firstMove = Boolean
-let aiFirst = false  //! change to TRUE if AI has to start 1st
 const Player_X = 'X'
 const Player_O = 'O'
 let arr = []
@@ -46,8 +48,31 @@ const winArray = [
 ]
 const kampai = [0, 2, 6, 8]
 
-start()      //! --------------------------- START THE GAME ---------------------------
+// if (AI_mode_only) {
+//     setInterval(() => {
+//         start()
+//     }, 500);
+// }
 
+
+
+// let myInt1 = setInterval(cycle, 500)
+// function cycle() {
+//     aiMove()
+//     reverseAI()
+// }
+// function reverseAI() {
+//     if (currentPlayer == Player_X) {
+//         currentPlayer = Player_O
+//         oponentPlayer = Player_X
+//     } else {
+//         currentPlayer = Player_X
+//         oponentPlayer = Player_O
+//     }
+// }
+start()
+
+//! start()      //! --------------------------- START THE GAME ---------------------------
 //! ----------------------------------------- START ---------------------------------------
 function start() {
 
@@ -57,15 +82,18 @@ function start() {
     }
     console.warn('level is: ' + level)
 
-    //* removing reset listener for AREA ---------------------------
+    //! removing START reset listener for AREA ---------------------------
     let area = document.querySelectorAll('.target')
     area.forEach(el => {
         el.removeEventListener('click', start)
         el.style.backgroundColor = 'transparent'
     })
-    //* erase & reset AREA FIELDS & RESULT --------------------------
-    area.forEach(el => el.innerText = '')
+
+    //! ADD eventlistener if PLAYER vs AI
     if (!AI_mode_only) area.forEach(el => el.addEventListener('click', playerFlip))
+
+    //* erase & reset AREA FIELDS & RESULT --------------------------    
+    area.forEach(el => el.innerText = '')
     document.querySelector('.result').innerText = ''
 
     //* init Arrays
@@ -79,22 +107,27 @@ function start() {
 
         // level = 2 //! MANUAL AI LEVEL
         whoStartsAI()
-        // for (let i = 0; i < 10; i++) {
-        // gameOver = false
-
-        while (!gameOver) {
-            aiMove()
-            reverseAI()
-            if (!gameOver) {
-                aiMove()
-                reverseAI()
+        function whoStartsAI() {
+            if (aiFirst) {
+                currentPlayer = Player_X
+                oponentPlayer = Player_O
             } else {
-                console.log('=================================================')
-                console.log('=================================================')
+                currentPlayer = Player_O
+                oponentPlayer = Player_X
             }
         }
 
+        // while (!gameOver) {
+        //     aiMove()
+        //     reverseAI()
         // }
+
+        var int1 = setInterval(() => {
+            aiMove()
+            reverseAI()
+            if (gameOver) clearInterval(int1)
+        }, 100);
+
 
         function reverseAI() {
             if (currentPlayer == Player_X) {
@@ -105,17 +138,12 @@ function start() {
                 oponentPlayer = Player_O
             }
         }
-
-        function whoStartsAI() {
-            if (aiFirst) {
-                currentPlayer = Player_X
-                oponentPlayer = Player_O
-            } else {
-                currentPlayer = Player_O
-                oponentPlayer = Player_X
-            }
-        }
     }
+
+
+
+    // console.log('=================================================')
+    // console.log('=================================================')
 
     //* ----------------------- PLAYER vs AI - who starts first logic -----------------------
     else if (aiFirst) {  //? aiFirst after WIN/DRAW will be INVERTED
@@ -189,6 +217,7 @@ function playerFlip(el) {
 }
 
 function aiMove() {
+    if (gameOver) return //! END IF GAME OVER
     // console.log('AI playing level: ' + level)
     makeArray() //* returns arr[] of occupied fields
     makeEmptyCells()
@@ -293,12 +322,14 @@ function aiMove() {
         console.log({ target })
         if (AI_mode_only) {
             document.querySelector(target).innerHTML = currentPlayer
+
             if (stepWasRandom) gameHistory.push(target + ' ' + currentPlayer + ' ' + 'random')
             else gameHistory.push(target + ' ' + currentPlayer)
             console.warn('step was random: ' + stepWasRandom)
         }
         else {
             document.querySelector(target).innerText = Player_O
+
             document.querySelector(target).removeEventListener('click', playerFlip)
             console.warn('step was random: ' + stepWasRandom)
         }
@@ -372,19 +403,24 @@ function winCheck() {
         })
     }
     if (gameOver) {
-        //* ENABLING radio buttons if game over
-        console.warn('--- GAME OVER ---')
         console.table(gameHistory)
         gameHistory = []
+        console.warn('--- GAME OVER ---')
+        //* ENABLING radio buttons if game over
         document.getElementsByName('level').forEach(el => el.disabled = false)
     }
 }
 
+//! REMOVE & ADD event listener
 function removeEventListeners() {
+
+    // clearInterval(myInt1)
+
+
     let allFields = document.querySelectorAll('.target')
     allFields.forEach(el => {
         el.removeEventListener('click', playerFlip)
-        console.log('removing event listener')
+        console.log('removing playerFlip() event listener')
     })
 
     //! console.error('making area reset sensitive')
@@ -392,5 +428,6 @@ function removeEventListeners() {
     let areaForReset = document.querySelectorAll('.target')
     areaForReset.forEach(el => {
         el.addEventListener('click', start)
+        console.log('adding START() event listener')
     })
 }
