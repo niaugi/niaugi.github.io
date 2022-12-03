@@ -101,9 +101,7 @@ function start() {
 
     if (playingRandomLevel) {
         level = randomLevel()
-        // console.warn('got random level: ' + level)
     }
-    // console.warn('level is: ' + level)
 
     //! removing START reset listener for AREA ---------------------------
     let area = document.querySelectorAll('.target')
