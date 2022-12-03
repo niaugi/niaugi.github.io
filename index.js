@@ -376,8 +376,8 @@ function winCheck() {
     if (emptyCells.length < 1 && !gameOver) {
         aiFirst = !aiFirst //! reversing who starts 1st
         // console.log('DRAW')
-        document.querySelector('#draws').textContent = draws
         draws++
+        document.querySelector('#draws').textContent = draws
         document.querySelector('.result').append('DRAW')
         gameOver = true
         removeEventListeners()
@@ -387,8 +387,8 @@ function winCheck() {
         // })
     }
     if (gameOver) {
-        document.querySelector('#total').textContent = total
         total++
+        document.querySelector('#total').textContent = total
         // console.table(gameHistory)
         gameHistory = []
         // console.warn('--- GAME OVER ---')
