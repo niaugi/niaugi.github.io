@@ -9,8 +9,9 @@ function check() {
 
 let gameHistory = []
 
-console.log('version 2.0 by Niaugi')
+console.log('version 2.1 by Niaugi')
 
+let total = 0
 let stop = false
 let AI_mode = false //! AI MODE
 let aiFirst = false  //! change to TRUE if AI has to start 1st
@@ -383,6 +384,8 @@ function winCheck() {
         // })
     }
     if (gameOver) {
+        document.querySelector('#total').textContent = total
+        total++
         // console.table(gameHistory)
         gameHistory = []
         // console.warn('--- GAME OVER ---')

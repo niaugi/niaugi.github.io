@@ -54,10 +54,6 @@ main {
     align-items: center;
 }
 
-.points-area {
-    margin-bottom: 1rem;
-}
-
 .points {
     font-size: 3rem;
 }
@@ -68,6 +64,11 @@ main {
 
 #pointsAI {
     color: red;
+}
+
+.total-div {
+    margin-bottom: 0.5rem;
+    opacity: 0.7;
 }
 
 /* RESULTS ---------------------------------------------------------- */

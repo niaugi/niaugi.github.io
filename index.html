@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tic Tac Toe v2.0</title>
+    <title>Tic Tac Toe v2.1</title>
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -13,7 +13,7 @@
 <body>
 
     <header>
-        <h1>Tic Tac Toe v2.0</h1>
+        <h1>Tic Tac Toe v2.1</h1>
         <div class="radio-checkbox">
             <div><input type="radio" name="level" id="level0" onclick="radio()">No brains</div>
             <div><input type="radio" name="level" checked="checked" id="level1" onclick="radio()">Normal</div>
@@ -30,6 +30,11 @@
                 <span class="points" id="pointsPlayer">0</span>
                 <span class="points dash">:</span>
                 <span class="points" id="pointsAI">0</span>
+            </div>
+
+            <div class="total-div">
+                <span>Total games played: </span>
+                <span id="total"></span>
             </div>
 
             <div class="slider">
@@ -58,6 +63,7 @@
         <div class="versions">
             <span class="spec-info">AI more info: inspect > console</span>
             <ul>Versions
+                <li>2.1 added total games count</li>
                 <li>2.0 AI vs AI brute speed, delay animation</li>
                 <li>1.9 AI vs AI pilot test</li>
                 <li>1.8 Cleaner and more effective code</li>
