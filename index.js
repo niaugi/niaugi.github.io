@@ -7,7 +7,7 @@ function check() {
 
 //todo HSL COLORS
 
-let gameHistory = []
+// let gameHistory = []
 
 console.log('version 2.1 by Niaugi')
 
@@ -85,7 +85,7 @@ function burnAI() {
     let bruteInt = setInterval(() => {
         start()
         // document.querySelector('#performance-speed').textContent = 
-        console.error({ loopSpeed })
+        // console.error({ loopSpeed })
         if (stop) clearInterval(bruteInt)
         if (speedChange) {
             clearInterval(bruteInt)
@@ -304,8 +304,8 @@ function aiMove() {
         if (AI_mode) {
             document.querySelector(target).innerHTML = currentPlayer
 
-            if (stepWasRandom) gameHistory.push(target + ' ' + currentPlayer + ' ' + 'random')
-            else gameHistory.push(target + ' ' + currentPlayer)
+            // if (stepWasRandom) gameHistory.push(target + ' ' + currentPlayer + ' ' + 'random')
+            // else gameHistory.push(target + ' ' + currentPlayer)
             // console.warn('step was random: ' + stepWasRandom)
         }
         else {
@@ -389,7 +389,7 @@ function winCheck() {
         total++
         document.querySelector('#total').textContent = total
         // console.table(gameHistory)
-        gameHistory = []
+        // gameHistory = []
         // console.warn('--- GAME OVER ---')
         //* ENABLING radio buttons if game over
         // document.getElementsByName('level').forEach(el => el.disabled = false)
@@ -406,11 +406,8 @@ function removeEventListeners() {
         el.removeEventListener('click', playerFlip)
     })
 
-    //! console.error('making area reset sensitive')
-
     let areaForReset = document.querySelectorAll('.target')
     areaForReset.forEach(el => {
         el.addEventListener('click', start)
-        // console.log('adding START() event listener')
     })
 }
