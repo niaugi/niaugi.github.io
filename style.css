@@ -76,6 +76,10 @@ main {
     font-weight: bold;
 }
 
+.performance {
+    margin-top: 0.5rem;
+}
+
 /* RESULTS ---------------------------------------------------------- */
 .result {
     position: absolute;

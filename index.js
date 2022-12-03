@@ -84,6 +84,7 @@ function AIvsAI() {
 function burnAI() {
     let bruteInt = setInterval(() => {
         start()
+        // document.querySelector('#performance-speed').textContent = 
         console.error({ loopSpeed })
         if (stop) clearInterval(bruteInt)
         if (speedChange) {
