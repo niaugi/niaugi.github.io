@@ -12,6 +12,7 @@ let gameHistory = []
 console.log('version 2.1 by Niaugi')
 
 let total = 0
+let draws = 0
 let stop = false
 let AI_mode = false //! AI MODE
 let aiFirst = false  //! change to TRUE if AI has to start 1st
@@ -375,6 +376,8 @@ function winCheck() {
     if (emptyCells.length < 1 && !gameOver) {
         aiFirst = !aiFirst //! reversing who starts 1st
         // console.log('DRAW')
+        document.querySelector('#draws').textContent = draws
+        draws++
         document.querySelector('.result').append('DRAW')
         gameOver = true
         removeEventListeners()

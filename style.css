@@ -72,7 +72,7 @@ main {
 }
 
 #total {
-    color: blue;
+    /* color: blue; */
     font-weight: bold;
 }
 
@@ -94,6 +94,7 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 0.5rem;
     margin-bottom: 1rem;
 }
 
