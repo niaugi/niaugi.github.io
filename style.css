@@ -71,6 +71,11 @@ main {
     opacity: 0.7;
 }
 
+#total {
+    color: blue;
+    font-weight: bold;
+}
+
 /* RESULTS ---------------------------------------------------------- */
 .result {
     position: absolute;
