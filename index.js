@@ -209,7 +209,7 @@ function playerFlip(el) {
 
 function aiMove() {
     if (gameOver) return //! END IF GAME OVER
-    console.log('AI playing level: ' + level)
+    // console.log('AI playing level: ' + level)
     makeArray() //* returns arr[] of occupied fields
     makeEmptyCells()
     let target = ''
